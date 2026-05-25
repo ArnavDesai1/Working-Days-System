@@ -23,6 +23,6 @@ cd backend
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 
-# Start Django development server on the configured port
+# Start Django with Gunicorn on the configured port
 PORT="${PORT:-8000}"
-python manage.py runserver "0.0.0.0:${PORT}"
+exec gunicorn backend.wsgi:application --bind 0.0.0.0:${PORT}
