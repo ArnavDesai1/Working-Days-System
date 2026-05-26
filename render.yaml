@@ -1,25 +1,29 @@
 services:
   - type: web
-    name: working-days-backend
+    name: working-days-system-backend
     env: python
     branch: main
     root: backend
     buildCommand: pip install -r requirements.txt
     startCommand: python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
+      # DATABASE_URL must be set in Render for production Postgres.
+      # If you use a Render managed database, bind it and expose it via DATABASE_URL.
       - key: DJANGO_ALLOWED_HOSTS
-        value: "127.0.0.1,localhost,working-days-backend.onrender.com"
+        value: "127.0.0.1,localhost,working-days-system-backend.onrender.com"
       - key: DJANGO_SECRET_KEY
         generate: true
       - key: DJANGO_DEBUG
         value: "false"
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://working-days-frontend.onrender.com"
+        value: "https://working-days-system-frontend.onrender.com"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://working-days-frontend.onrender.com"
+        value: "https://working-days-system-frontend.onrender.com"
+      - key: FRONTEND_URL
+        value: "https://working-days-system-frontend.onrender.com"
 
   - type: static
-    name: working-days-frontend
+    name: working-days-system-frontend
     env: static
     branch: main
     root: frontend
@@ -27,4 +31,4 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_BASE_URL
-        value: "https://working-days-backend.onrender.com/api"
+        value: "https://working-days-system-backend.onrender.com/api"

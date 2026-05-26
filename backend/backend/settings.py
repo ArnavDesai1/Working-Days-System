@@ -87,13 +87,13 @@ SESSION_COOKIE_SECURE = env_bool("DJANGO_SESSION_COOKIE_SECURE", not DEBUG)
 CSRF_COOKIE_SECURE = env_bool("DJANGO_CSRF_COOKIE_SECURE", not DEBUG)
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False
-SESSION_COOKIE_SAMESITE = os.environ.get("DJANGO_SESSION_COOKIE_SAMESITE", "Lax")
-CSRF_COOKIE_SAMESITE = os.environ.get("DJANGO_CSRF_COOKIE_SAMESITE", "Lax")
+SESSION_COOKIE_SAMESITE = os.environ.get("DJANGO_SESSION_COOKIE_SAMESITE", "None" if not DEBUG else "Lax")
+CSRF_COOKIE_SAMESITE = os.environ.get("DJANGO_CSRF_COOKIE_SAMESITE", "None" if not DEBUG else "Lax")
 
 JWT_ACCESS_COOKIE_NAME = os.environ.get("JWT_ACCESS_COOKIE_NAME", "ctv_access")
 JWT_REFRESH_COOKIE_NAME = os.environ.get("JWT_REFRESH_COOKIE_NAME", "ctv_refresh")
 JWT_COOKIE_SECURE = env_bool("JWT_COOKIE_SECURE", not DEBUG)
-JWT_COOKIE_SAMESITE = os.environ.get("JWT_COOKIE_SAMESITE", "Lax")
+JWT_COOKIE_SAMESITE = os.environ.get("JWT_COOKIE_SAMESITE", "None" if not DEBUG else "Lax")
 
 
 # Application definition
@@ -149,10 +149,16 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
 if DATABASE_URL:
+    parsed_db = dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+    if not parsed_db.get("NAME"):
+        raise RuntimeError(
+            "DATABASE_URL is set but could not parse a database NAME. "
+            "Confirm the URL is a valid Postgres URI like postgresql://user:pass@host:port/dbname"
+        )
     DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+        "default": parsed_db
     }
 else:
     DATABASES = {
