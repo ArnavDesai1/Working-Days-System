@@ -2578,7 +2578,7 @@ function App() {
         )}
 
         {activeView === "users" && isAdmin && (
-          <section className="dashboard-stack">
+          <section className="two-column">
             <form className="panel" onSubmit={createUser}>
               <div id="user-form-feedback" className="panel-header"><h2>Approve New User</h2></div>
               {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
