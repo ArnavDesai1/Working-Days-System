@@ -15,6 +15,8 @@ import {
   validateResetEmailForm,
 } from "./formFeedback.js";
 
+let memoryCsrfToken = localStorage.getItem("ctv_csrf_token") || "";
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`,
   withCredentials: true,
@@ -33,7 +35,7 @@ function getCookie(name) {
 api.interceptors.request.use((config) => {
   const method = String(config.method || "get").toLowerCase();
   if (!["get", "head", "options", "trace"].includes(method)) {
-    const csrfToken = getCookie("csrftoken");
+    const csrfToken = getCookie("csrftoken") || memoryCsrfToken;
     if (csrfToken) {
       config.headers = config.headers || {};
       config.headers["X-CSRFToken"] = decodeURIComponent(csrfToken);
@@ -43,7 +45,13 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (response.data && response.data.csrf_token) {
+      memoryCsrfToken = response.data.csrf_token;
+      localStorage.setItem("ctv_csrf_token", memoryCsrfToken);
+    }
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
     const status = error.response?.status;
@@ -54,7 +62,11 @@ api.interceptors.response.use(
     }
     originalRequest._retry = true;
     try {
-      await api.post("/auth/token/refresh/");
+      const refreshRes = await api.post("/auth/token/refresh/");
+      if (refreshRes.data && refreshRes.data.csrf_token) {
+        memoryCsrfToken = refreshRes.data.csrf_token;
+        localStorage.setItem("ctv_csrf_token", memoryCsrfToken);
+      }
       return api(originalRequest);
     } catch (refreshError) {
       return Promise.reject(refreshError);
@@ -275,6 +287,9 @@ function friendlyApiError(error, fallback) {
     return "Your session has expired. Please log in again.";
   }
   if (status === 403) {
+    if (typeof data?.detail === "string") {
+      return data.detail;
+    }
     return "You do not have permission to make that change.";
   }
   if (status === 404) {

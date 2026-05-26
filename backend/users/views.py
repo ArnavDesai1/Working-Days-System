@@ -135,8 +135,9 @@ class EmailTokenObtainPairView(TokenObtainPairView):
         data = serializer.validated_data.copy()
         access_token = data.pop("access")
         refresh_token = data.pop("refresh")
+        csrf_token = get_token(request)
+        data["csrf_token"] = csrf_token
         response = Response(data, status=status.HTTP_200_OK)
-        get_token(request)
         return set_auth_cookies(response, access_token, refresh_token)
 
 
@@ -153,7 +154,11 @@ class CookieTokenRefreshView(APIView):
         data = serializer.validated_data.copy()
         access_token = data.pop("access")
         next_refresh_token = data.pop("refresh", None)
-        response = Response({"detail": "Session refreshed."}, status=status.HTTP_200_OK)
+        csrf_token = get_token(request)
+        response = Response({
+            "detail": "Session refreshed.",
+            "csrf_token": csrf_token,
+        }, status=status.HTTP_200_OK)
         return set_auth_cookies(response, access_token, next_refresh_token)
 
 
@@ -289,6 +294,7 @@ class CurrentUserView(APIView):
                 "password_expires_at": password_expiry_datetime(request.user).isoformat(),
                 "must_reset_password": request.user.must_reset_password
                 or password_expires_in_days(request.user) <= 0,
+                "csrf_token": get_token(request),
             }
         )
 

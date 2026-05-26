@@ -51,7 +51,11 @@ export function parseApiFieldErrors(error) {
   }
 
   if (error.response?.status === 403) {
-    form = "You do not have permission to make that change.";
+    if (typeof data?.detail === "string") {
+      form = data.detail;
+    } else {
+      form = "You do not have permission to make that change.";
+    }
     return { fields, form };
   }
 
