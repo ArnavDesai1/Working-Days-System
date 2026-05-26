@@ -2615,17 +2615,15 @@ function App() {
             <section className="panel">
               <div className="panel-header">
                 <h2>Approved Accounts</h2>
-                <div style={{ display: "flex", gap: "10px", alignItems: "center", flex: "1", justifySelf: "end", justifyContent: "flex-end", maxWidth: "460px" }}>
-                  <input
-                    type="text"
-                    placeholder="Search approved accounts..."
-                    value={userSearch}
-                    onChange={(e) => setUserSearch(e.target.value)}
-                    style={{ minHeight: "36px", padding: "6px 12px", fontSize: "14px", width: "100%", maxWidth: "320px", margin: "0" }}
-                  />
-                  <button type="button" style={{ minHeight: "36px" }} onClick={loadUsers}>Refresh</button>
-                </div>
+                <button type="button" onClick={loadUsers}>Refresh</button>
               </div>
+              <input
+                type="text"
+                placeholder="Search approved accounts by email or name..."
+                value={userSearch}
+                onChange={(e) => setUserSearch(e.target.value)}
+                style={{ margin: "0 0 4px 0" }}
+              />
               <div className="account-list">
                 {filteredUsers.map((account) => (
                   <article className="account-row" key={account.id}>
