@@ -5,7 +5,7 @@ services:
     branch: main
     root: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: python manage.py migrate --noinput && python manage.py loaddata datadump.json --ignorenonexistent && python manage.py collectstatic --noinput && gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       # DATABASE_URL must be set in Render for production Postgres.
       # If you use a Render managed database, bind it and expose it via DATABASE_URL.
