@@ -2567,8 +2567,8 @@ function App() {
         )}
 
         {activeView === "users" && isAdmin && (
-          <section className="two-column">
-            <form className="panel" onSubmit={createUser}>
+          <section className="dashboard-stack">
+            <form className="panel" style={{ maxWidth: "540px" }} onSubmit={createUser}>
               <div id="user-form-feedback" className="panel-header"><h2>Approve New User</h2></div>
               {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
               <label className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
