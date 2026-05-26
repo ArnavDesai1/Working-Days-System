@@ -577,6 +577,7 @@ function App() {
   });
   const [newResetPassword, setNewResetPassword] = useState("");
   const [oneTimePasswordReveal, setOneTimePasswordReveal] = useState(null);
+  const [revealTempPassword, setRevealTempPassword] = useState(false);
   const [savedHolidaySearch, setSavedHolidaySearch] = useState("");
   const [savedHolidayMonthFilter, setSavedHolidayMonthFilter] = useState("current");
   const [savedHolidaysClientFilter, setSavedHolidaysClientFilter] = useState("");
@@ -736,6 +737,27 @@ function App() {
       cancelled = true;
     };
   }, [activeView, token]);
+
+  useEffect(() => {
+    setRevealTempPassword(false);
+  }, [oneTimePasswordReveal]);
+
+  useEffect(() => {
+    if (!oneTimePasswordReveal || !token) return undefined;
+    const intervalId = setInterval(() => {
+      loadUsers();
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, [oneTimePasswordReveal, token]);
+
+  useEffect(() => {
+    if (!oneTimePasswordReveal || !users.length) return;
+    const matchingUser = users.find((u) => u.email === oneTimePasswordReveal.email);
+    if (matchingUser && !matchingUser.must_reset_password) {
+      setOneTimePasswordReveal(null);
+      notifySuccess(`User ${oneTimePasswordReveal.email} has completed password setup.`);
+    }
+  }, [users, oneTimePasswordReveal]);
 
   useEffect(() => {
     if (!calendarForm.client && clients[0]) {
@@ -1877,7 +1899,21 @@ function App() {
             <div className="one-time-password-banner-inner">
               <strong>One-time temporary password for {oneTimePasswordReveal.email}</strong>
               <p className="muted">This value is shown once only. It is hashed in the database and cannot be viewed again in Inspect or API responses.</p>
-              <code className="one-time-password-value">{oneTimePasswordReveal.password}</code>
+              <div className="password-field readonly" style={{ position: "relative" }}>
+                <code className="one-time-password-value" style={{ paddingRight: "46px" }}>
+                  {revealTempPassword ? oneTimePasswordReveal.password : "•".repeat(oneTimePasswordReveal.password.length)}
+                </code>
+                <button
+                  type="button"
+                  className="password-toggle"
+                  style={{ top: 0, bottom: 0, height: "100%" }}
+                  aria-label={revealTempPassword ? "Hide password" : "Show password"}
+                  aria-pressed={revealTempPassword}
+                  onClick={() => setRevealTempPassword((curr) => !curr)}
+                >
+                  <EyeIcon open={revealTempPassword} />
+                </button>
+              </div>
               <div className="inline-actions">
                 <button type="button" className="ghost-button" onClick={() => copyPassword(oneTimePasswordReveal.password, "Temporary password copied.")}>Copy password</button>
                 <button type="button" onClick={() => setOneTimePasswordReveal(null)}>Dismiss</button>
