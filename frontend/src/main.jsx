@@ -578,6 +578,7 @@ function App() {
   const [newResetPassword, setNewResetPassword] = useState("");
   const [oneTimePasswordReveal, setOneTimePasswordReveal] = useState(null);
   const [revealTempPassword, setRevealTempPassword] = useState(false);
+  const [userSearch, setUserSearch] = useState("");
   const [savedHolidaySearch, setSavedHolidaySearch] = useState("");
   const [savedHolidayMonthFilter, setSavedHolidayMonthFilter] = useState("current");
   const [savedHolidaysClientFilter, setSavedHolidaysClientFilter] = useState("");
@@ -590,6 +591,16 @@ function App() {
   const [selectedSheet, setSelectedSheet] = useState("");
 
   const isAdmin = user?.role === "admin";
+  const filteredUsers = useMemo(() => {
+    const q = String(userSearch || "").trim().toLowerCase();
+    if (!q) return users;
+    return users.filter((u) => {
+      const email = String(u.email || "").toLowerCase();
+      const first = String(u.first_name || "").toLowerCase();
+      const last = String(u.last_name || "").toLowerCase();
+      return email.includes(q) || first.includes(q) || last.includes(q);
+    });
+  }, [users, userSearch]);
   const canEditCalendarSetup = isAdmin || Boolean(user?.can_edit_calendar_setup);
   const selectedClient = clients.find((client) => String(client.id) === String(calendarForm.client));
   const savedHolidaysClient = clients.find((client) => String(client.id) === String(savedHolidaysClientFilter || calendarForm.client));
@@ -2568,7 +2579,7 @@ function App() {
 
         {activeView === "users" && isAdmin && (
           <section className="dashboard-stack">
-            <form className="panel" style={{ maxWidth: "540px" }} onSubmit={createUser}>
+            <form className="panel" onSubmit={createUser}>
               <div id="user-form-feedback" className="panel-header"><h2>Approve New User</h2></div>
               {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
               <label className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
@@ -2602,9 +2613,21 @@ function App() {
               <button type="submit">Create approved account</button>
             </form>
             <section className="panel">
-              <div className="panel-header"><h2>Approved Accounts</h2><button type="button" onClick={loadUsers}>Refresh</button></div>
+              <div className="panel-header">
+                <h2>Approved Accounts</h2>
+                <div style={{ display: "flex", gap: "10px", alignItems: "center", flex: "1", justifySelf: "end", justifyContent: "flex-end", maxWidth: "460px" }}>
+                  <input
+                    type="text"
+                    placeholder="Search approved accounts..."
+                    value={userSearch}
+                    onChange={(e) => setUserSearch(e.target.value)}
+                    style={{ minHeight: "36px", padding: "6px 12px", fontSize: "14px", width: "100%", maxWidth: "320px", margin: "0" }}
+                  />
+                  <button type="button" style={{ minHeight: "36px" }} onClick={loadUsers}>Refresh</button>
+                </div>
+              </div>
               <div className="account-list">
-                {users.map((account) => (
+                {filteredUsers.map((account) => (
                   <article className="account-row" key={account.id}>
                     <div className="account-email"><span>Email</span><strong>{account.email}</strong></div>
                     <div className="account-meta">
