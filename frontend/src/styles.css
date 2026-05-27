@@ -2478,6 +2478,7 @@ nav {
 }
 
 .permission-badges {
+  align-items: start;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;

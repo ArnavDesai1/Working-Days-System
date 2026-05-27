@@ -2735,7 +2735,17 @@ function App() {
         {activeView === "users" && isAdmin && (
           <section className="admin-users-layout">
             <form className="panel approve-user-form" onSubmit={createUser}>
-              <div id="user-form-feedback" className="panel-header"><h2>Approve New User</h2></div>
+              <div id="user-form-feedback" className="panel-header">
+                <h2>Approve New User</h2>
+                <button
+                  type="button"
+                  className="ghost-button header-scroll-btn"
+                  onClick={() => scrollToFeedback("approved-accounts-panel")}
+                  style={{ fontSize: "12px", padding: "6px 12px" }}
+                >
+                  View Accounts ↓
+                </button>
+              </div>
               {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
               <label id="user-email-field" className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
                 Email
@@ -2766,8 +2776,11 @@ function App() {
                 <button type="button" className="ghost-button" disabled={!userForm.password} onClick={() => copyPassword(userForm.password, "Temporary password copied for sharing.")}>Copy password</button>
               </div>
               <button type="submit">Create approved account</button>
+              <p className="muted" style={{ textAlign: "center", margin: "12px 0 0 0", fontSize: "13px" }}>
+                Approved accounts are listed below. <a href="#approved-accounts-panel" onClick={(e) => { e.preventDefault(); scrollToFeedback("approved-accounts-panel"); }} style={{ color: "#00633f", fontWeight: "bold", textDecoration: "underline" }}>Scroll to view ↓</a>
+              </p>
             </form>
-            <section className="panel approved-accounts-panel">
+            <section id="approved-accounts-panel" className="panel approved-accounts-panel">
               <div className="panel-header">
                 <h2>Approved Accounts</h2>
                 <button type="button" onClick={loadUsers}>Refresh</button>
