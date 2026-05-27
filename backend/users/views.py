@@ -351,17 +351,27 @@ class RequestPasswordResetView(APIView):
         frontend_url = os.environ.get("FRONTEND_URL", "http://127.0.0.1:5173")
         reset_link = f"{frontend_url}/?reset=1&uid={uid}&token={token}"
 
-        send_mail(
-            subject="Reset your Clover Timesheet Validation password",
-            message=(
-                "A password reset was requested for your Clover Timesheet Validation account.\n\n"
-                f"Use this link to set a new password:\n{reset_link}\n\n"
-                "If you did not request this, ignore this email."
-            ),
-            from_email=os.environ.get("MAIL_USERNAME"),
-            recipient_list=[user.email],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                subject="Reset your Clover Timesheet Validation password",
+                message=(
+                    "A password reset was requested for your Clover Timesheet Validation account.\n\n"
+                    f"Use this link to set a new password:\n{reset_link}\n\n"
+                    "If you did not request this, ignore this email."
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL or os.environ.get("MAIL_USERNAME"),
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+        except Exception as exc:
+            # Fallback to server logs so that developers/admins can retrieve it directly if SMTP fails
+            print(f"PASSWORD RESET LINK FOR {user.email}: {reset_link}")
+            return Response(
+                {
+                    "detail": f"Failed to send email: {str(exc)}. Please confirm your Render/SMTP environment variables (MAIL_USERNAME and MAIL_APP_PASSWORD) are set. Admins can view the reset link in the server logs."
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
         return Response(
             {

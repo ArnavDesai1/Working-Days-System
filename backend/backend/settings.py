@@ -110,7 +110,6 @@ INSTALLED_APPS = [
     "users",
     "clients",
     "calendar_config",
-    "timesheets",
     "audit_logs",
 ]
 

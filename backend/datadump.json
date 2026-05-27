@@ -1,1979 +1,1895 @@
 [
-{
-  "model": "users.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$5rRZRJXuxlvjVx1JHemcO5$UO6Km7ikmQ349U0AemmHYwhjK7Dwe1V4/7XQJ7XkVmo=",
-    "last_login": null,
-    "is_superuser": true,
-    "username": "theelemental0@gmail.com",
-    "first_name": "Clover",
-    "last_name": "Admin",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2026-05-05T08:09:31.092Z",
-    "email": "theelemental0@gmail.com",
-    "role": "admin",
-    "password_changed_at": "2026-05-05T08:09:31.097Z",
-    "must_reset_password": false,
-    "can_edit_calendar_setup": false,
-    "can_edit_employee_deployments": false,
-    "updated_at": "2026-05-22T09:31:47.297Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "users.user",
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$Ljb8AzRpuMtaeU0ZD9C3qC$g7GrPiyRoNxKiI5IzFHpZiB4K/9Eatpq9kMsaQt+sMM=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "arnav.desai@somaiya.edu",
-    "first_name": "Arnav",
-    "last_name": "Desai",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-05-05T08:09:31.616Z",
-    "email": "arnav.desai@somaiya.edu",
-    "role": "user",
-    "password_changed_at": "2026-05-13T09:50:07.090Z",
-    "must_reset_password": false,
-    "can_edit_calendar_setup": true,
-    "can_edit_employee_deployments": true,
-    "updated_at": "2026-05-22T06:20:39.612Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "clients.client",
-  "pk": 1,
-  "fields": {
-    "name": "HDB Financial Services",
-    "status": "active",
-    "created_at": "2026-05-05T13:03:33.759Z",
-    "updated_at": "2026-05-13T08:09:34.074Z",
-    "locked_by": null,
-    "locked_at": null,
-    "lock_expires_at": null
-  }
-},
-{
-  "model": "clients.client",
-  "pk": 4,
-  "fields": {
-    "name": "Tata Consultancy Services",
-    "status": "active",
-    "created_at": "2026-05-22T09:52:28.873Z",
-    "updated_at": "2026-05-22T09:52:28.873Z",
-    "locked_by": null,
-    "locked_at": null,
-    "lock_expires_at": null
-  }
-},
-{
-  "model": "clients.client",
-  "pk": 8,
-  "fields": {
-    "name": "Reliance",
-    "status": "active",
-    "created_at": "2026-05-22T11:14:34.935Z",
-    "updated_at": "2026-05-22T11:14:34.935Z",
-    "locked_by": null,
-    "locked_at": null,
-    "lock_expires_at": null
-  }
-},
-{
-  "model": "calendar_config.workingdayconfig",
-  "pk": 1,
-  "fields": {
-    "client": 1,
-    "year": 2026,
-    "month": 5,
-    "working_days": 8,
-    "mon": true,
-    "tue": true,
-    "wed": true,
-    "thu": true,
-    "fri": false,
-    "sat": false,
-    "sun": false,
-    "weekend_policy": "unpaid",
-    "updated_at": "2026-05-22T08:02:53.424Z"
-  }
-},
-{
-  "model": "calendar_config.workingdayconfig",
-  "pk": 7,
-  "fields": {
-    "client": 1,
-    "year": 2026,
-    "month": 8,
-    "working_days": 26,
-    "mon": true,
-    "tue": true,
-    "wed": true,
-    "thu": true,
-    "fri": true,
-    "sat": true,
-    "sun": false,
-    "weekend_policy": "unpaid",
-    "updated_at": "2026-05-14T10:54:42.230Z"
-  }
-},
-{
-  "model": "calendar_config.workingdayconfig",
-  "pk": 8,
-  "fields": {
-    "client": 4,
-    "year": 2026,
-    "month": 1,
-    "working_days": 20,
-    "mon": true,
-    "tue": true,
-    "wed": true,
-    "thu": true,
-    "fri": true,
-    "sat": false,
-    "sun": false,
-    "weekend_policy": "unpaid",
-    "updated_at": "2026-05-22T09:52:44.996Z"
-  }
-},
-{
-  "model": "calendar_config.holiday",
-  "pk": 2,
-  "fields": {
-    "client": 1,
-    "name": "Client Foundation Day",
-    "date": "2026-05-18",
-    "duration_days": 1,
-    "type": "company",
-    "created_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-05T13:03:33.766Z"
-  }
-},
-{
-  "model": "calendar_config.holiday",
-  "pk": 9,
-  "fields": {
-    "client": 1,
-    "name": "Hello",
-    "date": "2026-05-18",
-    "duration_days": 12,
-    "type": "company",
-    "created_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-22T06:21:38.448Z"
-  }
-},
-{
-  "model": "calendar_config.holiday",
-  "pk": 10,
-  "fields": {
-    "client": 4,
-    "name": "Company Foundation Day",
-    "date": "2026-01-12",
-    "duration_days": 1,
-    "type": "company",
-    "created_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-22T09:52:45.017Z"
-  }
-},
-{
-  "model": "calendar_config.holiday",
-  "pk": 11,
-  "fields": {
-    "client": 4,
-    "name": "Republic Day",
-    "date": "2026-01-26",
-    "duration_days": 1,
-    "type": "public",
-    "created_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-22T09:52:45.056Z"
-  }
-},
-{
-  "model": "calendar_config.holiday",
-  "pk": 12,
-  "fields": {
-    "client": 4,
-    "name": "Maha Shivaratri",
-    "date": "2026-02-26",
-    "duration_days": 1,
-    "type": "public",
-    "created_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-22T09:52:45.076Z"
-  }
-},
-{
-  "model": "calendar_config.holiday",
-  "pk": 13,
-  "fields": {
-    "client": 4,
-    "name": "Holi",
-    "date": "2026-03-04",
-    "duration_days": 2,
-    "type": "public",
-    "created_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-22T09:52:45.096Z"
-  }
-},
-{
-  "model": "calendar_config.holiday",
-  "pk": 14,
-  "fields": {
-    "client": 4,
-    "name": "Ugadi / Gudi Padwa",
-    "date": "2026-03-30",
-    "duration_days": 1,
-    "type": "public",
-    "created_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-22T09:52:45.114Z"
-  }
-},
-{
-  "model": "timesheets.clientresource",
-  "pk": 1,
-  "fields": {
-    "client": 1,
-    "employee_code": "CI16023",
-    "full_name": "Arnav Desai",
-    "email": "arnav.desai@somaiya.edu",
-    "designation": "Associate Consultant",
-    "status": "active",
-    "created_at": "2026-05-05T13:03:33.767Z",
-    "updated_at": "2026-05-13T08:09:34.085Z",
-    "locked_by": null,
-    "locked_at": null,
-    "lock_expires_at": null
-  }
-},
-{
-  "model": "timesheets.clientresource",
-  "pk": 2,
-  "fields": {
-    "client": 1,
-    "employee_code": "CI8670",
-    "full_name": "Riya Shah",
-    "email": "riya.shah@example.com",
-    "designation": "QA Analyst",
-    "status": "active",
-    "created_at": "2026-05-05T13:03:33.768Z",
-    "updated_at": "2026-05-13T08:09:34.085Z",
-    "locked_by": null,
-    "locked_at": null,
-    "lock_expires_at": null
-  }
-},
-{
-  "model": "timesheets.monthlyworkentry",
-  "pk": 1,
-  "fields": {
-    "client": 1,
-    "resource": 1,
-    "year": 2026,
-    "month": 5,
-    "expected_working_days": 21,
-    "days_worked": "21.00",
-    "leave_days": "0.00",
-    "extra_days": "0.00",
-    "total_salary": null,
-    "payable_salary": null,
-    "remarks": "Full month worked",
-    "status": "draft",
-    "submitted_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-05T13:03:33.771Z",
-    "locked_by": null,
-    "locked_at": null,
-    "lock_expires_at": null
-  }
-},
-{
-  "model": "timesheets.monthlyworkentry",
-  "pk": 2,
-  "fields": {
-    "client": 1,
-    "resource": 2,
-    "year": 2026,
-    "month": 5,
-    "expected_working_days": 21,
-    "days_worked": "19.00",
-    "leave_days": "2.00",
-    "extra_days": "0.00",
-    "total_salary": null,
-    "payable_salary": null,
-    "remarks": "Two approved leave days",
-    "status": "draft",
-    "submitted_by": [
-      "theelemental0@gmail.com"
-    ],
-    "updated_at": "2026-05-05T13:03:33.772Z",
-    "locked_by": null,
-    "locked_at": null,
-    "lock_expires_at": null
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 1,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_DEACTIVATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user"
-    },
-    "created_at": "2026-05-13T05:55:04.572Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 2,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$1200000$5rRZRJXuxlvjVx1JHemcO5$UO6Km7ikmQ349U0AemmHYwhjK7Dwe1V4/7XQJ7XkVmo=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "theelemental0@gmail.com",
+      "first_name": "Clover",
+      "last_name": "Admin",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2026-05-05T08:09:31.092Z",
+      "email": "theelemental0@gmail.com",
+      "role": "admin",
+      "password_changed_at": "2026-05-05T08:09:31.097Z",
+      "must_reset_password": false,
+      "can_edit_calendar_setup": false,
+      "can_edit_employee_deployments": false,
+      "updated_at": "2026-05-22T09:31:47.297Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$1200000$Ljb8AzRpuMtaeU0ZD9C3qC$g7GrPiyRoNxKiI5IzFHpZiB4K/9Eatpq9kMsaQt+sMM=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "arnav.desai@somaiya.edu",
+      "first_name": "Arnav",
+      "last_name": "Desai",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-05-05T08:09:31.616Z",
+      "email": "arnav.desai@somaiya.edu",
       "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T06:59:43.208Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 3,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": false,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T06:59:45.261Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 4,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": false,
-      "employee_deployment_access": true
-    },
-    "created_at": "2026-05-13T06:59:46.552Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 5,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": false,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T06:59:49.408Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 6,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T06:59:52.822Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 7,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": true
-    },
-    "created_at": "2026-05-13T06:59:54.937Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 8,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T06:59:56.352Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 9,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": false,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T06:59:58.634Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 10,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T08:53:08.098Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 11,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": false,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T08:53:12.830Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 12,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_PASSWORD_RESET",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "must_reset_password": true,
-      "permissions_cleared": true
-    },
-    "created_at": "2026-05-13T09:35:04.938Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 13,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_ACTIVATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user"
-    },
-    "created_at": "2026-05-13T09:35:18.990Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 14,
-  "fields": {
-    "actor": [
-      "arnav.desai@somaiya.edu"
-    ],
-    "action": "PASSWORD_CHANGED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "reset_required_cleared": true
-    },
-    "created_at": "2026-05-13T09:50:07.095Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 15,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": false
-    },
-    "created_at": "2026-05-13T09:58:56.575Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 16,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": true
-    },
-    "created_at": "2026-05-13T09:58:58.394Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 17,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": false,
-      "employee_deployment_access": true
-    },
-    "created_at": "2026-05-13T10:43:00.380Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 18,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "7",
-    "target_display": "Buddha Purnima",
-    "payload": {
-      "client": "Clover Internal Services",
-      "date": "2026-05-12",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-13T12:04:17.832Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 19,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_DELETED",
-    "target_type": "holiday",
-    "target_id": "7",
-    "target_display": "Buddha Purnima",
-    "payload": {
-      "client": "Clover Internal Services",
-      "date": "2026-05-12",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-13T12:04:56.652Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 20,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "8",
-    "target_display": "Buddha Purnima",
-    "payload": {
-      "client": "Clover Internal Services",
-      "date": "2026-05-12",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-13T12:05:50.605Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 21,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_DELETED",
-    "target_type": "holiday",
-    "target_id": "8",
-    "target_display": "Buddha Purnima",
-    "payload": {
-      "client": "Clover Internal Services",
-      "date": "2026-05-12",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-13T12:22:37.163Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 22,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_DELETED",
-    "target_type": "client",
-    "target_id": "2",
-    "target_display": "Clover Internal Services",
-    "payload": {
-      "status": "inactive"
-    },
-    "created_at": "2026-05-14T10:50:08.231Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 23,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_CREATED",
-    "target_type": "client",
-    "target_id": "3",
-    "target_display": "Hello",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-14T10:50:45.415Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 24,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_CREATED",
-    "target_type": "working_day_config",
-    "target_id": "7",
-    "target_display": "HDB Financial Services - 8/2026",
-    "payload": {
-      "client": "HDB Financial Services",
+      "password_changed_at": "2026-05-13T09:50:07.090Z",
+      "must_reset_password": false,
+      "can_edit_calendar_setup": true,
+      "can_edit_employee_deployments": true,
+      "updated_at": "2026-05-22T06:20:39.612Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "clients.client",
+    "pk": 1,
+    "fields": {
+      "name": "HDB Financial Services",
+      "status": "active",
+      "created_at": "2026-05-05T13:03:33.759Z",
+      "updated_at": "2026-05-13T08:09:34.074Z",
+      "locked_by": null,
+      "locked_at": null,
+      "lock_expires_at": null
+    }
+  },
+  {
+    "model": "clients.client",
+    "pk": 4,
+    "fields": {
+      "name": "Tata Consultancy Services",
+      "status": "active",
+      "created_at": "2026-05-22T09:52:28.873Z",
+      "updated_at": "2026-05-22T09:52:28.873Z",
+      "locked_by": null,
+      "locked_at": null,
+      "lock_expires_at": null
+    }
+  },
+  {
+    "model": "clients.client",
+    "pk": 8,
+    "fields": {
+      "name": "Reliance",
+      "status": "active",
+      "created_at": "2026-05-22T11:14:34.935Z",
+      "updated_at": "2026-05-22T11:14:34.935Z",
+      "locked_by": null,
+      "locked_at": null,
+      "lock_expires_at": null
+    }
+  },
+  {
+    "model": "calendar_config.workingdayconfig",
+    "pk": 1,
+    "fields": {
+      "client": 1,
       "year": 2026,
-      "month": 8,
-      "working_days": 21,
+      "month": 5,
+      "working_days": 8,
+      "mon": true,
+      "tue": true,
+      "wed": true,
+      "thu": true,
+      "fri": false,
+      "sat": false,
+      "sun": false,
       "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": null
-    },
-    "created_at": "2026-05-14T10:54:14.616Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 25,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "7",
-    "target_display": "HDB Financial Services - 8/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 8,
-      "working_days": 21,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 21,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-14T10:54:16.653Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 26,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "7",
-    "target_display": "HDB Financial Services - 8/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 8,
-      "working_days": 21,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 21,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-14T10:54:21.071Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 27,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "7",
-    "target_display": "HDB Financial Services - 8/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 8,
-      "working_days": 21,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 21,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-14T10:54:24.019Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 28,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "7",
-    "target_display": "HDB Financial Services - 8/2026",
-    "payload": {
-      "client": "HDB Financial Services",
+      "updated_at": "2026-05-22T08:02:53.424Z"
+    }
+  },
+  {
+    "model": "calendar_config.workingdayconfig",
+    "pk": 7,
+    "fields": {
+      "client": 1,
       "year": 2026,
       "month": 8,
       "working_days": 26,
+      "mon": true,
+      "tue": true,
+      "wed": true,
+      "thu": true,
+      "fri": true,
+      "sat": true,
+      "sun": false,
       "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": true,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 21,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-14T10:54:42.236Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 29,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "1",
-    "target_display": "HDB Financial Services - 5/2026",
-    "payload": {
-      "client": "HDB Financial Services",
+      "updated_at": "2026-05-14T10:54:42.230Z"
+    }
+  },
+  {
+    "model": "calendar_config.workingdayconfig",
+    "pk": 8,
+    "fields": {
+      "client": 4,
       "year": 2026,
-      "month": 5,
-      "working_days": 15,
+      "month": 1,
+      "working_days": 20,
+      "mon": true,
+      "tue": true,
+      "wed": true,
+      "thu": true,
+      "fri": true,
+      "sat": false,
+      "sun": false,
       "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 21,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-15T07:12:50.723Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 30,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "1",
-    "target_display": "HDB Financial Services - 5/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 5,
-      "working_days": 15,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 15,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-15T07:14:14.615Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 31,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": true
-    },
-    "created_at": "2026-05-22T06:20:31.377Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 32,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": false,
-      "employee_deployment_access": true
-    },
-    "created_at": "2026-05-22T06:20:33.988Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 33,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "USER_UPDATED",
-    "target_type": "user",
-    "target_id": "2",
-    "target_display": "arnav.desai@somaiya.edu",
-    "payload": {
-      "role": "user",
-      "previous_role": "user",
-      "calendar_setup_access": true,
-      "employee_deployment_access": true
-    },
-    "created_at": "2026-05-22T06:20:39.616Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 34,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "9",
-    "target_display": "Hello",
-    "payload": {
-      "client": "HDB Financial Services",
+      "updated_at": "2026-05-22T09:52:44.996Z"
+    }
+  },
+  {
+    "model": "calendar_config.holiday",
+    "pk": 2,
+    "fields": {
+      "client": 1,
+      "name": "Client Foundation Day",
+      "date": "2026-05-18",
+      "duration_days": 1,
+      "type": "company",
+      "created_by": [
+        "theelemental0@gmail.com"
+      ],
+      "updated_at": "2026-05-05T13:03:33.766Z"
+    }
+  },
+  {
+    "model": "calendar_config.holiday",
+    "pk": 9,
+    "fields": {
+      "client": 1,
+      "name": "Hello",
       "date": "2026-05-18",
       "duration_days": 12,
-      "type": "company"
-    },
-    "created_at": "2026-05-22T06:21:38.452Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 35,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_DELETED",
-    "target_type": "holiday",
-    "target_id": "1",
-    "target_display": "Maharashtra Day",
-    "payload": {
-      "client": "HDB Financial Services",
-      "date": "2026-05-01",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T06:25:55.494Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 36,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "1",
-    "target_display": "HDB Financial Services - 5/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 5,
-      "working_days": 8,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 15,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-22T06:32:54.583Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 37,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "1",
-    "target_display": "HDB Financial Services - 5/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 5,
-      "working_days": 8,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 8,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-22T06:48:18.574Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 38,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "1",
-    "target_display": "HDB Financial Services - 5/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 5,
-      "working_days": 8,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 8,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-22T07:00:02.075Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 39,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "1",
-    "target_display": "HDB Financial Services - 5/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 5,
-      "working_days": 8,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 8,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-22T07:10:46.554Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 40,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "1",
-    "target_display": "HDB Financial Services - 5/2026",
-    "payload": {
-      "client": "HDB Financial Services",
-      "year": 2026,
-      "month": 5,
-      "working_days": 8,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": {
-        "working_days": 8,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": false,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-22T08:02:53.429Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 41,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_CREATED",
-    "target_type": "client",
-    "target_id": "4",
-    "target_display": "Tata Consultancy Services",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T09:52:28.881Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 42,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_CREATED",
-    "target_type": "working_day_config",
-    "target_id": "8",
-    "target_display": "Tata Consultancy Services - 1/2026",
-    "payload": {
-      "client": "Tata Consultancy Services",
-      "year": 2026,
-      "month": 1,
-      "working_days": 20,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
-      },
-      "previous_values": null
-    },
-    "created_at": "2026-05-22T09:52:45.001Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 43,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "10",
-    "target_display": "Company Foundation Day",
-    "payload": {
-      "client": "Tata Consultancy Services",
+      "type": "company",
+      "created_by": [
+        "theelemental0@gmail.com"
+      ],
+      "updated_at": "2026-05-22T06:21:38.448Z"
+    }
+  },
+  {
+    "model": "calendar_config.holiday",
+    "pk": 10,
+    "fields": {
+      "client": 4,
+      "name": "Company Foundation Day",
       "date": "2026-01-12",
       "duration_days": 1,
-      "type": "company"
-    },
-    "created_at": "2026-05-22T09:52:45.021Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 44,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "11",
-    "target_display": "Republic Day",
-    "payload": {
-      "client": "Tata Consultancy Services",
+      "type": "company",
+      "created_by": [
+        "theelemental0@gmail.com"
+      ],
+      "updated_at": "2026-05-22T09:52:45.017Z"
+    }
+  },
+  {
+    "model": "calendar_config.holiday",
+    "pk": 11,
+    "fields": {
+      "client": 4,
+      "name": "Republic Day",
       "date": "2026-01-26",
       "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:52:45.061Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 45,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "12",
-    "target_display": "Maha Shivaratri",
-    "payload": {
-      "client": "Tata Consultancy Services",
+      "type": "public",
+      "created_by": [
+        "theelemental0@gmail.com"
+      ],
+      "updated_at": "2026-05-22T09:52:45.056Z"
+    }
+  },
+  {
+    "model": "calendar_config.holiday",
+    "pk": 12,
+    "fields": {
+      "client": 4,
+      "name": "Maha Shivaratri",
       "date": "2026-02-26",
       "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:52:45.082Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 46,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "13",
-    "target_display": "Holi",
-    "payload": {
-      "client": "Tata Consultancy Services",
+      "type": "public",
+      "created_by": [
+        "theelemental0@gmail.com"
+      ],
+      "updated_at": "2026-05-22T09:52:45.076Z"
+    }
+  },
+  {
+    "model": "calendar_config.holiday",
+    "pk": 13,
+    "fields": {
+      "client": 4,
+      "name": "Holi",
       "date": "2026-03-04",
       "duration_days": 2,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:52:45.101Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 47,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "14",
-    "target_display": "Ugadi / Gudi Padwa",
-    "payload": {
-      "client": "Tata Consultancy Services",
+      "type": "public",
+      "created_by": [
+        "theelemental0@gmail.com"
+      ],
+      "updated_at": "2026-05-22T09:52:45.096Z"
+    }
+  },
+  {
+    "model": "calendar_config.holiday",
+    "pk": 14,
+    "fields": {
+      "client": 4,
+      "name": "Ugadi / Gudi Padwa",
       "date": "2026-03-30",
       "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:52:45.119Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 48,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_CREATED",
-    "target_type": "client",
-    "target_id": "5",
-    "target_display": "Reliance Industries",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T09:58:21.109Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 49,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_CREATED",
-    "target_type": "working_day_config",
-    "target_id": "9",
-    "target_display": "Reliance Industries - 1/2026",
-    "payload": {
-      "client": "Reliance Industries",
-      "year": 2026,
-      "month": 1,
-      "working_days": 20,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
+      "type": "public",
+      "created_by": [
+        "theelemental0@gmail.com"
+      ],
+      "updated_at": "2026-05-22T09:52:45.114Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 1,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_DEACTIVATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user"
       },
-      "previous_values": null
-    },
-    "created_at": "2026-05-22T09:58:31.770Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 50,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "15",
-    "target_display": "Independence Day",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-08-15",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:58:31.791Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 51,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "16",
-    "target_display": "Ram Navami",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-04-06",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:58:31.835Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 52,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "17",
-    "target_display": "Ambedkar Jayanti",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-04-14",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:58:31.869Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 53,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "18",
-    "target_display": "Good Friday",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-04-18",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T09:58:31.894Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 54,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_DELETED",
-    "target_type": "client",
-    "target_id": "5",
-    "target_display": "Reliance Industries",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T10:00:19.931Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 55,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_CREATED",
-    "target_type": "client",
-    "target_id": "6",
-    "target_display": "Reliance Industries",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T10:14:44.420Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 56,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_CREATED",
-    "target_type": "working_day_config",
-    "target_id": "10",
-    "target_display": "Reliance Industries - 1/2026",
-    "payload": {
-      "client": "Reliance Industries",
-      "year": 2026,
-      "month": 1,
-      "working_days": 20,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
+      "created_at": "2026-05-13T05:55:04.572Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 2,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": false
       },
-      "previous_values": null
-    },
-    "created_at": "2026-05-22T10:14:50.996Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 57,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "19",
-    "target_display": "Independence Day",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-08-15",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T10:14:51.017Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 58,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "20",
-    "target_display": "Ram Navami",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-04-06",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T10:14:51.058Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 59,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "21",
-    "target_display": "Ambedkar Jayanti",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-04-14",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T10:14:51.079Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 60,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "HOLIDAY_CREATED",
-    "target_type": "holiday",
-    "target_id": "22",
-    "target_display": "Good Friday",
-    "payload": {
-      "client": "Reliance Industries",
-      "date": "2026-04-18",
-      "duration_days": 1,
-      "type": "public"
-    },
-    "created_at": "2026-05-22T10:14:51.100Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 61,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_CREATED",
-    "target_type": "client",
-    "target_id": "7",
-    "target_display": "Congress",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T10:44:34.757Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 62,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CALENDAR_RULES_UPDATED",
-    "target_type": "working_day_config",
-    "target_id": "10",
-    "target_display": "Reliance Industries - 1/2026",
-    "payload": {
-      "client": "Reliance Industries",
-      "year": 2026,
-      "month": 1,
-      "working_days": 20,
-      "weekend_policy": "unpaid",
-      "weekdays": {
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false
+      "created_at": "2026-05-13T06:59:43.208Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 3,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": false,
+        "employee_deployment_access": false
       },
-      "previous_values": {
+      "created_at": "2026-05-13T06:59:45.261Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 4,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": false,
+        "employee_deployment_access": true
+      },
+      "created_at": "2026-05-13T06:59:46.552Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 5,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": false,
+        "employee_deployment_access": false
+      },
+      "created_at": "2026-05-13T06:59:49.408Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 6,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": false
+      },
+      "created_at": "2026-05-13T06:59:52.822Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 7,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": true
+      },
+      "created_at": "2026-05-13T06:59:54.937Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 8,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": false
+      },
+      "created_at": "2026-05-13T06:59:56.352Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 9,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": false,
+        "employee_deployment_access": false
+      },
+      "created_at": "2026-05-13T06:59:58.634Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 10,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": false
+      },
+      "created_at": "2026-05-13T08:53:08.098Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 11,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": false,
+        "employee_deployment_access": false
+      },
+      "created_at": "2026-05-13T08:53:12.830Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 12,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_PASSWORD_RESET",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "must_reset_password": true,
+        "permissions_cleared": true
+      },
+      "created_at": "2026-05-13T09:35:04.938Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 13,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_ACTIVATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user"
+      },
+      "created_at": "2026-05-13T09:35:18.990Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 14,
+    "fields": {
+      "actor": [
+        "arnav.desai@somaiya.edu"
+      ],
+      "action": "PASSWORD_CHANGED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "reset_required_cleared": true
+      },
+      "created_at": "2026-05-13T09:50:07.095Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 15,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": false
+      },
+      "created_at": "2026-05-13T09:58:56.575Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 16,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": true
+      },
+      "created_at": "2026-05-13T09:58:58.394Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 17,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": false,
+        "employee_deployment_access": true
+      },
+      "created_at": "2026-05-13T10:43:00.380Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 18,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "7",
+      "target_display": "Buddha Purnima",
+      "payload": {
+        "client": "Clover Internal Services",
+        "date": "2026-05-12",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-13T12:04:17.832Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 19,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_DELETED",
+      "target_type": "holiday",
+      "target_id": "7",
+      "target_display": "Buddha Purnima",
+      "payload": {
+        "client": "Clover Internal Services",
+        "date": "2026-05-12",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-13T12:04:56.652Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 20,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "8",
+      "target_display": "Buddha Purnima",
+      "payload": {
+        "client": "Clover Internal Services",
+        "date": "2026-05-12",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-13T12:05:50.605Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 21,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_DELETED",
+      "target_type": "holiday",
+      "target_id": "8",
+      "target_display": "Buddha Purnima",
+      "payload": {
+        "client": "Clover Internal Services",
+        "date": "2026-05-12",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-13T12:22:37.163Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 22,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_DELETED",
+      "target_type": "client",
+      "target_id": "2",
+      "target_display": "Clover Internal Services",
+      "payload": {
+        "status": "inactive"
+      },
+      "created_at": "2026-05-14T10:50:08.231Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 23,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_CREATED",
+      "target_type": "client",
+      "target_id": "3",
+      "target_display": "Hello",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-14T10:50:45.415Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 24,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_CREATED",
+      "target_type": "working_day_config",
+      "target_id": "7",
+      "target_display": "HDB Financial Services - 8/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 8,
+        "working_days": 21,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": null
+      },
+      "created_at": "2026-05-14T10:54:14.616Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 25,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "7",
+      "target_display": "HDB Financial Services - 8/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 8,
+        "working_days": 21,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 21,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-14T10:54:16.653Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 26,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "7",
+      "target_display": "HDB Financial Services - 8/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 8,
+        "working_days": 21,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 21,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-14T10:54:21.071Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 27,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "7",
+      "target_display": "HDB Financial Services - 8/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 8,
+        "working_days": 21,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 21,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-14T10:54:24.019Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 28,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "7",
+      "target_display": "HDB Financial Services - 8/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 8,
+        "working_days": 26,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": true,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 21,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-14T10:54:42.236Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 29,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "1",
+      "target_display": "HDB Financial Services - 5/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 5,
+        "working_days": 15,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 21,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-15T07:12:50.723Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 30,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "1",
+      "target_display": "HDB Financial Services - 5/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 5,
+        "working_days": 15,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 15,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-15T07:14:14.615Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 31,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": true
+      },
+      "created_at": "2026-05-22T06:20:31.377Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 32,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": false,
+        "employee_deployment_access": true
+      },
+      "created_at": "2026-05-22T06:20:33.988Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 33,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "USER_UPDATED",
+      "target_type": "user",
+      "target_id": "2",
+      "target_display": "arnav.desai@somaiya.edu",
+      "payload": {
+        "role": "user",
+        "previous_role": "user",
+        "calendar_setup_access": true,
+        "employee_deployment_access": true
+      },
+      "created_at": "2026-05-22T06:20:39.616Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 34,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "9",
+      "target_display": "Hello",
+      "payload": {
+        "client": "HDB Financial Services",
+        "date": "2026-05-18",
+        "duration_days": 12,
+        "type": "company"
+      },
+      "created_at": "2026-05-22T06:21:38.452Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 35,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_DELETED",
+      "target_type": "holiday",
+      "target_id": "1",
+      "target_display": "Maharashtra Day",
+      "payload": {
+        "client": "HDB Financial Services",
+        "date": "2026-05-01",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T06:25:55.494Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 36,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "1",
+      "target_display": "HDB Financial Services - 5/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 5,
+        "working_days": 8,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 15,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-22T06:32:54.583Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 37,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "1",
+      "target_display": "HDB Financial Services - 5/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 5,
+        "working_days": 8,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 8,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-22T06:48:18.574Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 38,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "1",
+      "target_display": "HDB Financial Services - 5/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 5,
+        "working_days": 8,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 8,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-22T07:00:02.075Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 39,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "1",
+      "target_display": "HDB Financial Services - 5/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 5,
+        "working_days": 8,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 8,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-22T07:10:46.554Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 40,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "1",
+      "target_display": "HDB Financial Services - 5/2026",
+      "payload": {
+        "client": "HDB Financial Services",
+        "year": 2026,
+        "month": 5,
+        "working_days": 8,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 8,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": false,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-22T08:02:53.429Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 41,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_CREATED",
+      "target_type": "client",
+      "target_id": "4",
+      "target_display": "Tata Consultancy Services",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T09:52:28.881Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 42,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_CREATED",
+      "target_type": "working_day_config",
+      "target_id": "8",
+      "target_display": "Tata Consultancy Services - 1/2026",
+      "payload": {
+        "client": "Tata Consultancy Services",
+        "year": 2026,
+        "month": 1,
         "working_days": 20,
-        "mon": true,
-        "tue": true,
-        "wed": true,
-        "thu": true,
-        "fri": true,
-        "sat": false,
-        "sun": false,
-        "weekend_policy": "unpaid"
-      }
-    },
-    "created_at": "2026-05-22T10:49:34.031Z"
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": null
+      },
+      "created_at": "2026-05-22T09:52:45.001Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 43,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "10",
+      "target_display": "Company Foundation Day",
+      "payload": {
+        "client": "Tata Consultancy Services",
+        "date": "2026-01-12",
+        "duration_days": 1,
+        "type": "company"
+      },
+      "created_at": "2026-05-22T09:52:45.021Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 44,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "11",
+      "target_display": "Republic Day",
+      "payload": {
+        "client": "Tata Consultancy Services",
+        "date": "2026-01-26",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:52:45.061Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 45,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "12",
+      "target_display": "Maha Shivaratri",
+      "payload": {
+        "client": "Tata Consultancy Services",
+        "date": "2026-02-26",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:52:45.082Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 46,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "13",
+      "target_display": "Holi",
+      "payload": {
+        "client": "Tata Consultancy Services",
+        "date": "2026-03-04",
+        "duration_days": 2,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:52:45.101Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 47,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "14",
+      "target_display": "Ugadi / Gudi Padwa",
+      "payload": {
+        "client": "Tata Consultancy Services",
+        "date": "2026-03-30",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:52:45.119Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 48,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_CREATED",
+      "target_type": "client",
+      "target_id": "5",
+      "target_display": "Reliance Industries",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T09:58:21.109Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 49,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_CREATED",
+      "target_type": "working_day_config",
+      "target_id": "9",
+      "target_display": "Reliance Industries - 1/2026",
+      "payload": {
+        "client": "Reliance Industries",
+        "year": 2026,
+        "month": 1,
+        "working_days": 20,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": null
+      },
+      "created_at": "2026-05-22T09:58:31.770Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 50,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "15",
+      "target_display": "Independence Day",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-08-15",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:58:31.791Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 51,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "16",
+      "target_display": "Ram Navami",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-04-06",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:58:31.835Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 52,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "17",
+      "target_display": "Ambedkar Jayanti",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-04-14",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:58:31.869Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 53,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "18",
+      "target_display": "Good Friday",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-04-18",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T09:58:31.894Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 54,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_DELETED",
+      "target_type": "client",
+      "target_id": "5",
+      "target_display": "Reliance Industries",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T10:00:19.931Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 55,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_CREATED",
+      "target_type": "client",
+      "target_id": "6",
+      "target_display": "Reliance Industries",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T10:14:44.420Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 56,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_CREATED",
+      "target_type": "working_day_config",
+      "target_id": "10",
+      "target_display": "Reliance Industries - 1/2026",
+      "payload": {
+        "client": "Reliance Industries",
+        "year": 2026,
+        "month": 1,
+        "working_days": 20,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": null
+      },
+      "created_at": "2026-05-22T10:14:50.996Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 57,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "19",
+      "target_display": "Independence Day",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-08-15",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T10:14:51.017Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 58,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "20",
+      "target_display": "Ram Navami",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-04-06",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T10:14:51.058Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 59,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "21",
+      "target_display": "Ambedkar Jayanti",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-04-14",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T10:14:51.079Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 60,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "HOLIDAY_CREATED",
+      "target_type": "holiday",
+      "target_id": "22",
+      "target_display": "Good Friday",
+      "payload": {
+        "client": "Reliance Industries",
+        "date": "2026-04-18",
+        "duration_days": 1,
+        "type": "public"
+      },
+      "created_at": "2026-05-22T10:14:51.100Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 61,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_CREATED",
+      "target_type": "client",
+      "target_id": "7",
+      "target_display": "Congress",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T10:44:34.757Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 62,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CALENDAR_RULES_UPDATED",
+      "target_type": "working_day_config",
+      "target_id": "10",
+      "target_display": "Reliance Industries - 1/2026",
+      "payload": {
+        "client": "Reliance Industries",
+        "year": 2026,
+        "month": 1,
+        "working_days": 20,
+        "weekend_policy": "unpaid",
+        "weekdays": {
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false
+        },
+        "previous_values": {
+          "working_days": 20,
+          "mon": true,
+          "tue": true,
+          "wed": true,
+          "thu": true,
+          "fri": true,
+          "sat": false,
+          "sun": false,
+          "weekend_policy": "unpaid"
+        }
+      },
+      "created_at": "2026-05-22T10:49:34.031Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 63,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_DELETED",
+      "target_type": "client",
+      "target_id": "7",
+      "target_display": "Congress",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T10:51:09.454Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 64,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_DELETED",
+      "target_type": "client",
+      "target_id": "6",
+      "target_display": "Reliance Industries",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T11:14:17.555Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 65,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_CREATED",
+      "target_type": "client",
+      "target_id": "8",
+      "target_display": "Reliance",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T11:14:34.940Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 66,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_DELETED",
+      "target_type": "client",
+      "target_id": "3",
+      "target_display": "Hello",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T11:19:11.089Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 67,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_CREATED",
+      "target_type": "client",
+      "target_id": "9",
+      "target_display": "hi",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T11:23:18.555Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 68,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_UPDATED",
+      "target_type": "client",
+      "target_id": "9",
+      "target_display": "hi",
+      "payload": {
+        "name": "hi",
+        "status": "inactive",
+        "previous_name": "hi",
+        "previous_status": "active"
+      },
+      "created_at": "2026-05-22T11:27:39.081Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 69,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_UPDATED",
+      "target_type": "client",
+      "target_id": "9",
+      "target_display": "hi",
+      "payload": {
+        "name": "hi",
+        "status": "active",
+        "previous_name": "hi",
+        "previous_status": "inactive"
+      },
+      "created_at": "2026-05-22T11:27:42.023Z"
+    }
+  },
+  {
+    "model": "audit_logs.auditlog",
+    "pk": 70,
+    "fields": {
+      "actor": [
+        "theelemental0@gmail.com"
+      ],
+      "action": "CLIENT_DELETED",
+      "target_type": "client",
+      "target_id": "9",
+      "target_display": "hi",
+      "payload": {
+        "status": "active"
+      },
+      "created_at": "2026-05-22T11:27:44.311Z"
+    }
   }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 63,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_DELETED",
-    "target_type": "client",
-    "target_id": "7",
-    "target_display": "Congress",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T10:51:09.454Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 64,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_DELETED",
-    "target_type": "client",
-    "target_id": "6",
-    "target_display": "Reliance Industries",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T11:14:17.555Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 65,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_CREATED",
-    "target_type": "client",
-    "target_id": "8",
-    "target_display": "Reliance",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T11:14:34.940Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 66,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_DELETED",
-    "target_type": "client",
-    "target_id": "3",
-    "target_display": "Hello",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T11:19:11.089Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 67,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_CREATED",
-    "target_type": "client",
-    "target_id": "9",
-    "target_display": "hi",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T11:23:18.555Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 68,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_UPDATED",
-    "target_type": "client",
-    "target_id": "9",
-    "target_display": "hi",
-    "payload": {
-      "name": "hi",
-      "status": "inactive",
-      "previous_name": "hi",
-      "previous_status": "active"
-    },
-    "created_at": "2026-05-22T11:27:39.081Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 69,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_UPDATED",
-    "target_type": "client",
-    "target_id": "9",
-    "target_display": "hi",
-    "payload": {
-      "name": "hi",
-      "status": "active",
-      "previous_name": "hi",
-      "previous_status": "inactive"
-    },
-    "created_at": "2026-05-22T11:27:42.023Z"
-  }
-},
-{
-  "model": "audit_logs.auditlog",
-  "pk": 70,
-  "fields": {
-    "actor": [
-      "theelemental0@gmail.com"
-    ],
-    "action": "CLIENT_DELETED",
-    "target_type": "client",
-    "target_id": "9",
-    "target_display": "hi",
-    "payload": {
-      "status": "active"
-    },
-    "created_at": "2026-05-22T11:27:44.311Z"
-  }
-}
 ]
