@@ -543,9 +543,6 @@ function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [toast, setToast] = useState("");
   const resetPanelRef = useRef(null);
-  const activeViewRef = useRef(activeView);
-  const calendarFormRef = useRef(calendarForm);
-  const holidayFormRef = useRef(holidayForm);
 
   const [calendarForm, setCalendarForm] = useState({
     client: "",
@@ -571,6 +568,9 @@ function App() {
   const [loginFormErrors, setLoginFormErrors] = useState({});
   const [loginFormBanner, setLoginFormBanner] = useState("");
   const [editingHoliday, setEditingHoliday] = useState(null);
+  const activeViewRef = useRef(activeView);
+  const calendarFormRef = useRef(calendarForm);
+  const holidayFormRef = useRef(holidayForm);
 
   const [showResetRequest, setShowResetRequest] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
