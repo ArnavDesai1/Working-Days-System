@@ -510,6 +510,13 @@ function PasswordField({ value, onChange, readOnly = false, disabled = false, au
 }
 
 function App() {
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(savedSession?.user ? "cookie" : "");
@@ -2734,52 +2741,79 @@ function App() {
 
         {activeView === "users" && isAdmin && (
           <section className="admin-users-layout">
-            <form className="panel approve-user-form" onSubmit={createUser}>
-              <div id="user-form-feedback" className="panel-header">
-                <h2>Approve New User</h2>
-                <button
-                  type="button"
-                  className="ghost-button header-scroll-btn"
-                  onClick={() => scrollToFeedback("approved-accounts-panel")}
-                  style={{ fontSize: "12px", padding: "6px 12px" }}
-                >
-                  View Accounts ↓
-                </button>
-              </div>
-              {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
-              <label id="user-email-field" className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
-                Email
-                <input type="email" value={userForm.email} onChange={(event) => { setUserForm({ ...userForm, email: event.target.value }); setUserFormErrors((current) => ({ ...current, email: "" })); setUserManagementError(""); }} />
-              </label>
-              <FieldError message={userFormErrors.email} />
-              <label>First name<input value={userForm.first_name} onChange={(event) => setUserForm({ ...userForm, first_name: event.target.value })} /></label>
-              <label>Last name<input value={userForm.last_name} onChange={(event) => setUserForm({ ...userForm, last_name: event.target.value })} /></label>
-              <label>Role<select value={userForm.role} onChange={(event) => setUserForm({ ...userForm, role: event.target.value })}><option value="user">User</option><option value="admin">Admin</option></select></label>
-              {userForm.role === "admin" ? (
-                <div className="temporary-password-box compact">
-                  <span>Admin access</span>
-                  <strong>Full access automatically applied</strong>
-                  <p>Admins can manage calendars, users, and security without separate edit toggles.</p>
+            <div className="admin-users-top-grid">
+              <form className="panel approve-user-form" onSubmit={createUser}>
+                <div id="user-form-feedback" className="panel-header">
+                  <h2>Approve New User</h2>
+                  <button
+                    type="button"
+                    className="ghost-button header-scroll-btn"
+                    onClick={() => scrollToSection("approved-accounts-panel")}
+                    style={{ fontSize: "12px", padding: "6px 12px" }}
+                  >
+                    View Accounts ↓
+                  </button>
                 </div>
-              ) : (
-                <div className="permission-grid">
-                  <label className="toggle-row"><input type="checkbox" checked={userForm.can_edit_calendar_setup} onChange={(event) => setUserForm({ ...userForm, can_edit_calendar_setup: event.target.checked })} />Allow calendar setup editing</label>
+                {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
+                <label id="user-email-field" className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
+                  Email
+                  <input type="email" value={userForm.email} onChange={(event) => { setUserForm({ ...userForm, email: event.target.value }); setUserFormErrors((current) => ({ ...current, email: "" })); setUserManagementError(""); }} />
+                </label>
+                <FieldError message={userFormErrors.email} />
+                <label>First name<input value={userForm.first_name} onChange={(event) => setUserForm({ ...userForm, first_name: event.target.value })} /></label>
+                <label>Last name<input value={userForm.last_name} onChange={(event) => setUserForm({ ...userForm, last_name: event.target.value })} /></label>
+                <label>Role<select value={userForm.role} onChange={(event) => setUserForm({ ...userForm, role: event.target.value })}><option value="user">User</option><option value="admin">Admin</option></select></label>
+                {userForm.role === "admin" ? (
+                  <div className="temporary-password-box compact">
+                    <span>Admin access</span>
+                    <strong>Full access automatically applied</strong>
+                    <p>Admins can manage calendars, users, and security without separate edit toggles.</p>
+                  </div>
+                ) : (
+                  <div className="permission-grid">
+                    <label className="toggle-row"><input type="checkbox" checked={userForm.can_edit_calendar_setup} onChange={(event) => setUserForm({ ...userForm, can_edit_calendar_setup: event.target.checked })} />Allow calendar setup editing</label>
+                  </div>
+                )}
+                <label id="user-password-field" className={`form-field${userFormErrors.password ? " has-error" : ""}`}>
+                  Temporary password
+                  <PasswordField value={userForm.password} onChange={(event) => { setUserForm({ ...userForm, password: event.target.value }); setUserFormErrors((current) => ({ ...current, password: "" })); setUserManagementError(""); }} autoComplete="new-password" />
+                </label>
+                <FieldError message={userFormErrors.password} />
+                <div className="inline-actions">
+                  <button type="button" className="ghost-button" onClick={fillGeneratedUserPassword}>Generate password</button>
+                  <button type="button" className="ghost-button" disabled={!userForm.password} onClick={() => copyPassword(userForm.password, "Temporary password copied for sharing.")}>Copy password</button>
                 </div>
-              )}
-              <label id="user-password-field" className={`form-field${userFormErrors.password ? " has-error" : ""}`}>
-                Temporary password
-                <PasswordField value={userForm.password} onChange={(event) => { setUserForm({ ...userForm, password: event.target.value }); setUserFormErrors((current) => ({ ...current, password: "" })); setUserManagementError(""); }} autoComplete="new-password" />
-              </label>
-              <FieldError message={userFormErrors.password} />
-              <div className="inline-actions">
-                <button type="button" className="ghost-button" onClick={fillGeneratedUserPassword}>Generate password</button>
-                <button type="button" className="ghost-button" disabled={!userForm.password} onClick={() => copyPassword(userForm.password, "Temporary password copied for sharing.")}>Copy password</button>
-              </div>
-              <button type="submit">Create approved account</button>
-              <p className="muted" style={{ textAlign: "center", margin: "12px 0 0 0", fontSize: "13px" }}>
-                Approved accounts are listed below. <a href="#approved-accounts-panel" onClick={(e) => { e.preventDefault(); scrollToFeedback("approved-accounts-panel"); }} style={{ color: "#00633f", fontWeight: "bold", textDecoration: "underline" }}>Scroll to view ↓</a>
-              </p>
-            </form>
+                <button type="submit">Create approved account</button>
+                <p className="muted" style={{ textAlign: "center", margin: "12px 0 0 0", fontSize: "13px" }}>
+                  Approved accounts are listed below. <a href="#approved-accounts-panel" onClick={(e) => { e.preventDefault(); scrollToSection("approved-accounts-panel"); }} style={{ color: "#00633f", fontWeight: "bold", textDecoration: "underline" }}>Scroll to view ↓</a>
+                </p>
+              </form>
+              <article className="panel user-management-guide">
+                <div className="panel-header">
+                  <h3>📌 Navigation Guide</h3>
+                </div>
+                <div className="guide-content">
+                  <p>Approved user accounts are listed directly below this section.</p>
+                  <p className="muted">To manage existing accounts (search, edit permissions, deactivate, reset passwords, or delete):</p>
+                  <div className="guide-actions">
+                    <button
+                      type="button"
+                      className="ghost-button"
+                      onClick={() => scrollToSection("approved-accounts-panel")}
+                      style={{ width: "100%", justifyContent: "center", display: "flex", gap: "8px" }}
+                    >
+                      <span>Jump to Approved Accounts</span>
+                      <span>↓</span>
+                    </button>
+                  </div>
+                  <hr className="divider" />
+                  <div className="guide-note">
+                    <strong>💡 Pro Tip:</strong>
+                    <p className="muted">Admins have full access automatically. Regular users can have their calendar edit permissions granted or revoked at any time from the account cards below.</p>
+                  </div>
+                </div>
+              </article>
+            </div>
             <section id="approved-accounts-panel" className="panel approved-accounts-panel">
               <div className="panel-header">
                 <h2>Approved Accounts</h2>

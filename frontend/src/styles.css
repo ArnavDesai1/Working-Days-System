@@ -3222,3 +3222,54 @@ td select {
   width: 100%;
 }
 
+.admin-users-top-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(320px, 600px) minmax(320px, 460px);
+  align-items: start;
+}
+
+.user-management-guide {
+  background: #f7faf9;
+  border: 1px solid #d8e0dd;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.user-management-guide h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1e2523;
+}
+
+.user-management-guide p {
+  line-height: 1.5;
+  margin: 8px 0;
+}
+
+.user-management-guide .guide-actions {
+  margin: 16px 0;
+}
+
+.user-management-guide .divider {
+  border: 0;
+  border-top: 1px solid #d8e0dd;
+  margin: 16px 0;
+}
+
+.user-management-guide .guide-note {
+  font-size: 13px;
+}
+
+.user-management-guide .guide-note strong {
+  color: #00633f;
+  display: block;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 960px) {
+  .admin-users-top-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
