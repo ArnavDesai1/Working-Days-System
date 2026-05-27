@@ -764,7 +764,7 @@ function App() {
 
     const INACTIVITY_LOGOUT_MS = 10 * 60 * 1000; // 10 minutes
     const INACTIVITY_WARNING_MS = 9 * 60 * 1000; // 9 minutes
-    const VISIBILITY_LOGOUT_MS = 30 * 1000; // 30 seconds
+    const VISIBILITY_LOGOUT_MS = 5 * 60 * 1000; // 5 minutes
 
     function resetInactivityTimers() {
       if (warningTimeoutId) clearTimeout(warningTimeoutId);
@@ -1659,6 +1659,29 @@ function App() {
   async function createUser(event) {
     event.preventDefault();
     clearErrors();
+
+    // Client-side validation
+    const localErrors = {};
+    if (!String(userForm.email || "").trim()) {
+      localErrors.email = "Email is required.";
+    }
+    if (!String(userForm.password || "").trim()) {
+      localErrors.password = "Temporary password is required.";
+    }
+
+    if (localErrors.email || localErrors.password) {
+      setUserFormErrors({
+        email: localErrors.email || "",
+        password: localErrors.password || "",
+      });
+      if (localErrors.email) {
+        scrollToFeedback("user-email-field");
+      } else {
+        scrollToFeedback("user-password-field");
+      }
+      return;
+    }
+
     try {
       const response = await api.post("/users/", userForm, { headers: headers(token) });
       setUserForm(initialUser);
@@ -1680,11 +1703,16 @@ function App() {
       if (emailError || passwordError) {
         setUserFormErrors({ email: emailError, password: passwordError });
         setUserManagementError(form || "");
+        if (emailError) {
+          scrollToFeedback("user-email-field");
+        } else {
+          scrollToFeedback("user-password-field");
+        }
       } else {
         setUserFormErrors({ email: "", password: "" });
         setUserManagementError(form || friendlyApiError(requestError, "Unable to create user."));
+        scrollToFeedback("user-form-feedback");
       }
-      scrollToFeedback("user-form-feedback");
     }
   }
 
@@ -2705,11 +2733,11 @@ function App() {
         )}
 
         {activeView === "users" && isAdmin && (
-          <section className="two-column">
-            <form className="panel" onSubmit={createUser}>
+          <section className="admin-users-layout">
+            <form className="panel approve-user-form" onSubmit={createUser}>
               <div id="user-form-feedback" className="panel-header"><h2>Approve New User</h2></div>
               {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
-              <label className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
+              <label id="user-email-field" className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
                 Email
                 <input type="email" value={userForm.email} onChange={(event) => { setUserForm({ ...userForm, email: event.target.value }); setUserFormErrors((current) => ({ ...current, email: "" })); setUserManagementError(""); }} />
               </label>
@@ -2728,7 +2756,7 @@ function App() {
                   <label className="toggle-row"><input type="checkbox" checked={userForm.can_edit_calendar_setup} onChange={(event) => setUserForm({ ...userForm, can_edit_calendar_setup: event.target.checked })} />Allow calendar setup editing</label>
                 </div>
               )}
-              <label className={`form-field${userFormErrors.password ? " has-error" : ""}`}>
+              <label id="user-password-field" className={`form-field${userFormErrors.password ? " has-error" : ""}`}>
                 Temporary password
                 <PasswordField value={userForm.password} onChange={(event) => { setUserForm({ ...userForm, password: event.target.value }); setUserFormErrors((current) => ({ ...current, password: "" })); setUserManagementError(""); }} autoComplete="new-password" />
               </label>
@@ -2739,7 +2767,7 @@ function App() {
               </div>
               <button type="submit">Create approved account</button>
             </form>
-            <section className="panel">
+            <section className="panel approved-accounts-panel">
               <div className="panel-header">
                 <h2>Approved Accounts</h2>
                 <button type="button" onClick={loadUsers}>Refresh</button>

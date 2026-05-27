@@ -3208,3 +3208,16 @@ td select {
     transform: translateX(-50%) translateY(0);
   }
 }
+
+.admin-users-layout {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+.approve-user-form {
+  max-width: 600px;
+  width: 100%;
+}
+
