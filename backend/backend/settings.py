@@ -63,10 +63,18 @@ if not DEBUG and SECRET_KEY == "dev-only-change-me-before-production":
 
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", ["127.0.0.1", "localhost", "testserver"])
 
-CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", [
+# Build default CORS origins based on environment
+_default_cors_origins = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
-])
+]
+# Add production Render frontend URL if not in debug mode
+if not DEBUG:
+    _default_cors_origins.extend([
+        "https://working-days-system-frontend.onrender.com",
+    ])
+
+CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", _default_cors_origins)
 
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", CORS_ALLOWED_ORIGINS)
 
@@ -238,3 +246,4 @@ EMAIL_HOST_USER = os.environ.get("MAIL_USERNAME", "")
 EMAIL_HOST_PASSWORD = os.environ.get("MAIL_APP_PASSWORD", "").replace(" ", "")
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_TIMEOUT = 5
