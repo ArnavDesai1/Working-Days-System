@@ -2256,6 +2256,7 @@ nav {
 .account-list {
   display: grid;
   gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
 .account-row {

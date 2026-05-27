@@ -530,6 +530,7 @@ function App() {
   const [holidays, setHolidays] = useState([]);
   const [workingDayConfigs, setWorkingDayConfigs] = useState([]);
   const [users, setUsers] = useState([]);
+  const [usersLoaded, setUsersLoaded] = useState(false);
   const [auditLogs, setAuditLogs] = useState([]);
 
   const [clientForm, setClientForm] = useState(initialClient);
@@ -542,6 +543,9 @@ function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [toast, setToast] = useState("");
   const resetPanelRef = useRef(null);
+  const activeViewRef = useRef(activeView);
+  const calendarFormRef = useRef(calendarForm);
+  const holidayFormRef = useRef(holidayForm);
 
   const [calendarForm, setCalendarForm] = useState({
     client: "",
@@ -705,6 +709,18 @@ function App() {
   }, [toast]);
 
   useEffect(() => {
+    activeViewRef.current = activeView;
+  }, [activeView]);
+
+  useEffect(() => {
+    calendarFormRef.current = calendarForm;
+  }, [calendarForm]);
+
+  useEffect(() => {
+    holidayFormRef.current = holidayForm;
+  }, [holidayForm]);
+
+  useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
 
@@ -730,6 +746,77 @@ function App() {
   useEffect(() => {
     if (!token) return;
     loadWorkspace();
+  }, [token]);
+
+  useEffect(() => {
+    if (token && user?.role === "admin") {
+      loadUsers();
+      loadAuditLogs();
+    }
+  }, [token, user]);
+
+  useEffect(() => {
+    if (!token) return undefined;
+
+    let warningTimeoutId = null;
+    let logoutTimeoutId = null;
+    let visibilityTimeoutId = null;
+
+    const INACTIVITY_LOGOUT_MS = 10 * 60 * 1000; // 10 minutes
+    const INACTIVITY_WARNING_MS = 9 * 60 * 1000; // 9 minutes
+    const VISIBILITY_LOGOUT_MS = 30 * 1000; // 30 seconds
+
+    function resetInactivityTimers() {
+      if (warningTimeoutId) clearTimeout(warningTimeoutId);
+      if (logoutTimeoutId) clearTimeout(logoutTimeoutId);
+
+      warningTimeoutId = setTimeout(() => {
+        setToast("You will be logged out in 1 minute due to inactivity.");
+      }, INACTIVITY_WARNING_MS);
+
+      logoutTimeoutId = setTimeout(() => {
+        saveCalendarDraft();
+        logout();
+      }, INACTIVITY_LOGOUT_MS);
+    }
+
+    resetInactivityTimers();
+
+    const activityEvents = ["mousemove", "keydown", "touchstart", "click", "scroll"];
+    function handleUserActivity() {
+      resetInactivityTimers();
+    }
+
+    activityEvents.forEach((event) => {
+      window.addEventListener(event, handleUserActivity, { passive: true });
+    });
+
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        visibilityTimeoutId = setTimeout(() => {
+          saveCalendarDraft();
+          logout();
+        }, VISIBILITY_LOGOUT_MS);
+      } else {
+        if (visibilityTimeoutId) {
+          clearTimeout(visibilityTimeoutId);
+          visibilityTimeoutId = null;
+        }
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      if (warningTimeoutId) clearTimeout(warningTimeoutId);
+      if (logoutTimeoutId) clearTimeout(logoutTimeoutId);
+      if (visibilityTimeoutId) clearTimeout(visibilityTimeoutId);
+
+      activityEvents.forEach((event) => {
+        window.removeEventListener(event, handleUserActivity);
+      });
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, [token]);
 
   useEffect(() => {
@@ -1170,8 +1257,25 @@ function App() {
       setPasswordMeta(buildPasswordMetaFromAuthPayload(response.data));
       setPassword("");
       setChangePassword({ current_password: "", new_password: "" });
-      navigateToView("dashboard", { preserveFeedback: true });
-      notifySuccess("Signed in successfully.");
+      const canEdit = response.data.user.role === "admin" || Boolean(response.data.user.can_edit_calendar_setup);
+      const savedDraft = localStorage.getItem("ctv_calendar_draft");
+      if (canEdit && savedDraft) {
+        try {
+          const { calendarForm: draftCalendar, holidayForm: draftHoliday } = JSON.parse(savedDraft);
+          if (draftCalendar) setCalendarForm(draftCalendar);
+          if (draftHoliday) setHolidayForm(draftHoliday);
+          navigateToView("calendar");
+          setToast("Your calendar setup progress has been restored.");
+          localStorage.removeItem("ctv_calendar_draft");
+        } catch (e) {
+          console.error("Error restoring calendar draft:", e);
+          navigateToView("dashboard", { preserveFeedback: true });
+          notifySuccess("Signed in successfully.");
+        }
+      } else {
+        navigateToView("dashboard", { preserveFeedback: true });
+        notifySuccess("Signed in successfully.");
+      }
     } catch (requestError) {
       applyFormApiError(requestError, {
         anchorId: "login-form-feedback",
@@ -1181,6 +1285,18 @@ function App() {
       });
     } finally {
       setBusy(false);
+    }
+  }
+
+  function saveCalendarDraft() {
+    if (activeViewRef.current === "calendar") {
+      localStorage.setItem(
+        "ctv_calendar_draft",
+        JSON.stringify({
+          calendarForm: calendarFormRef.current,
+          holidayForm: holidayFormRef.current,
+        })
+      );
     }
   }
 
@@ -1202,6 +1318,8 @@ function App() {
     sessionStorage.removeItem("ctv_session");
     localStorage.removeItem("ctv_session");
     localStorage.removeItem("ctv_active_view");
+    memoryCsrfToken = "";
+    localStorage.removeItem("ctv_csrf_token");
   }
 
   async function requestPasswordReset(event) {
@@ -1346,6 +1464,12 @@ function App() {
 
   async function persistCalendarSave() {
     clearErrors();
+    const daysInMonth = monthCalendarInsight.daysInMonth;
+    if (displayedWorkingDays > daysInMonth) {
+      setCalendarFormBanner(`Error: Calculated working days (${displayedWorkingDays}) cannot exceed calendar days in month (${daysInMonth}).`);
+      scrollToFeedback("calendar-form-feedback");
+      return;
+    }
     try {
       const response = await api.post("/working-day-configs/", withKnownVersion({ ...calendarForm, working_days: displayedWorkingDays }, calendarForm.updated_at), { headers: headers(token) });
       setCalendarForm((current) => ({ ...current, working_days: displayedWorkingDays, updated_at: response.data.updated_at || "" }));
@@ -1565,11 +1689,14 @@ function App() {
   }
 
   async function loadUsers() {
+    setUsersLoaded(false);
     try {
       const response = await api.get("/users/", { headers: headers(token) });
       setUsers(response.data);
     } catch {
       setUserManagementError("Unable to load users.");
+    } finally {
+      setUsersLoaded(true);
     }
   }
 
@@ -2619,63 +2746,79 @@ function App() {
               </div>
               <input
                 type="text"
-                placeholder="Search approved accounts by email or name..."
+                placeholder="Search by email or name..."
                 value={userSearch}
                 onChange={(e) => setUserSearch(e.target.value)}
                 style={{ margin: "0 0 4px 0" }}
               />
               <div className="account-list">
-                {filteredUsers.map((account) => (
-                  <article className="account-row" key={account.id}>
-                    <div className="account-email"><span>Email</span><strong>{account.email}</strong></div>
-                    <div className="account-meta">
-                      <div><span>Role</span><strong className="role-text">{account.role}</strong></div>
-                      <div><span>Status</span><strong className={account.is_active ? "status-active" : "status-inactive"}>{account.is_active ? "Active" : "Inactive"}</strong></div>
-                      {account.role === "admin" ? (
-                        <div className="permission-badges">
-                          <span className="pill status-active">Full admin access</span>
-                        </div>
-                      ) : (
-                        <div className="permission-badges">
-                          <span className={account.can_edit_calendar_setup ? "pill status-active" : "pill pending"}>{account.can_edit_calendar_setup ? "Can edit calendar" : "Calendar view only"}</span>
-                        </div>
-                      )}
-                      {account.must_reset_password && (
-                        <p className="muted">Must change password on next sign-in. Use Reset to issue a new one-time temporary password.</p>
-                      )}
-                      <div className="account-actions">
-                        <button type="button" className="small-button" onClick={() => requestUserReset(account)}>Reset</button>
-                        {account.role !== "admin" && (
-                          <>
-                            <button
-                              type="button"
-                              className="small-button ghost-button"
-                              onClick={() => updateUserAccount(account, { can_edit_calendar_setup: !account.can_edit_calendar_setup }, `${account.email} calendar access updated.`)}
-                            >
-                              {account.can_edit_calendar_setup ? "Remove calendar edit" : "Grant calendar edit"}
-                            </button>
-                          </>
-                        )}
-                        {account.is_active ? (
-                          <button type="button" className="small-button danger-button" disabled={account.email === user.email} onClick={() => deactivateUser(account)}>Deactivate</button>
+                {!usersLoaded && users.length === 0 ? (
+                  <p className="muted" style={{ padding: "16px", textAlign: "center", gridColumn: "1 / -1" }}>Loading accounts...</p>
+                ) : filteredUsers.length === 0 ? (
+                  <p className="muted" style={{ padding: "16px", textAlign: "center", gridColumn: "1 / -1" }}>No accounts found.</p>
+                ) : (
+                  filteredUsers.map((account) => (
+                    <article className="account-row" key={account.id}>
+                      <div className="account-email"><span>Email</span><strong>{account.email}</strong></div>
+                      <div className="account-meta">
+                        <div><span>Role</span><strong className="role-text">{account.role}</strong></div>
+                        <div><span>Status</span><strong className={account.is_active ? "status-active" : "status-inactive"}>{account.is_active ? "Active" : "Inactive"}</strong></div>
+                        {account.role === "admin" ? (
+                          <div className="permission-badges">
+                            <span className="pill status-active">Full admin access</span>
+                          </div>
                         ) : (
-                          <button type="button" className="small-button" onClick={() => activateUser(account)}>Activate</button>
+                          <div className="permission-badges">
+                            <span className={account.can_edit_calendar_setup ? "pill status-active" : "pill pending"}>{account.can_edit_calendar_setup ? "Can edit calendar" : "Calendar view only"}</span>
+                          </div>
                         )}
-                        <button
-                          type="button"
-                          className="small-button danger-button"
-                          onClick={() => requestDeleteAccount(account)}
-                        >
-                          Delete
-                        </button>
+                        {account.must_reset_password && (
+                          <p className="muted">Must change password on next sign-in. Use Reset to issue a new one-time temporary password.</p>
+                        )}
+                        <div className="account-actions">
+                          <button type="button" className="small-button" onClick={() => requestUserReset(account)}>Reset</button>
+                          {account.role !== "admin" && (
+                            <>
+                              <button
+                                type="button"
+                                className="small-button ghost-button"
+                                onClick={() => updateUserAccount(account, { can_edit_calendar_setup: !account.can_edit_calendar_setup }, `${account.email} calendar access updated.`)}
+                              >
+                                {account.can_edit_calendar_setup ? "Remove calendar edit" : "Grant calendar edit"}
+                              </button>
+                            </>
+                          )}
+                          {account.is_active ? (
+                            <button type="button" className="small-button danger-button" disabled={account.email === user.email} onClick={() => deactivateUser(account)}>Deactivate</button>
+                          ) : (
+                            <button type="button" className="small-button" onClick={() => activateUser(account)}>Activate</button>
+                          )}
+                          <button
+                            type="button"
+                            className="small-button danger-button"
+                            onClick={() => requestDeleteAccount(account)}
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                ))}
+                    </article>
+                  ))
+                )}
               </div>
             </section>
             {resetPassword.userId && (
-              <form ref={resetPanelRef} className="panel reset-panel" autoComplete="on" onSubmit={(event) => { event.preventDefault(); resetUserPassword(resetPassword.userId); }}>
+              <form ref={resetPanelRef} className="panel reset-panel" autoComplete="on" onSubmit={(event) => {
+                event.preventDefault();
+                setConfirmDialog({
+                  title: "Apply password reset?",
+                  message: `Are you sure you want to reset the password for ${resetPassword.email}? This will set a new temporary password and clear their edit permissions.`,
+                  confirmLabel: "Apply Reset",
+                  onConfirm: async () => {
+                    await resetUserPassword(resetPassword.userId);
+                  }
+                });
+              }}>
                 <div className="panel-header"><h2>Reset Password</h2><button type="button" className="ghost-button" onClick={() => setResetPassword({ userId: "", email: "", newPassword: "", currentPasswordPreview: "" })}>Close</button></div>
                 <p className="muted">{resetPassword.email}</p>
                 <div className="temporary-password-box compact">
