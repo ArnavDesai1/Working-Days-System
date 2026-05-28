@@ -657,6 +657,7 @@ function App() {
     const weekdayOnlyBreakdown = calculateMonthWorkingDays(year, month, calendarForm, []);
     const savedHolidayRows = buildHolidayDayRows(selectedMonthHolidays, year, month, "saved");
     const savedDateSet = new Set(savedHolidayRows.map((row) => row.date));
+    const savedHolidayDateCount = savedDateSet.size;
     const indiaReferenceRows = buildHolidayDayRows(
       getIndiaHolidaysForMonth(year, month).filter((holiday) => !savedDateSet.has(holiday.date)),
       year,
@@ -669,6 +670,7 @@ function App() {
       weekdaySlots: weekdayOnlyBreakdown.total,
       holidayExclusions,
       suggestedWorkingDays: currentMonthBreakdown.total,
+      savedHolidayDateCount,
       savedHolidayRows,
       indiaReferenceRows,
     };
@@ -2552,7 +2554,7 @@ function App() {
                   <div className="insight-formula">
                     <span>{monthCalendarInsight.weekdaySlots} selected day slots</span>
                     <span className="insight-minus">−</span>
-                    <span>{monthCalendarInsight.holidayExclusions} holiday exclusions</span>
+                    <span>{monthCalendarInsight.holidayExclusions} workday holiday exclusions</span>
                     <span className="insight-equals">=</span>
                     <span>{displayedWorkingDays} billable days</span>
                   </div>
@@ -2560,7 +2562,7 @@ function App() {
                 <div className="insight-breakdown-grid">
                   <article><span>Calendar days</span><strong>{monthCalendarInsight.daysInMonth}</strong></article>
                   <article><span>Selected workdays</span><strong>{monthCalendarInsight.weekdaySlots}</strong></article>
-                  <article><span>Saved holiday dates</span><strong>{monthCalendarInsight.savedHolidayRows.length}</strong></article>
+                  <article><span>Saved holiday dates</span><strong>{monthCalendarInsight.savedHolidayDateCount}</strong></article>
                   <article><span>Weekend policy</span><strong>{calendarForm.weekend_policy}</strong></article>
                 </div>
                 {false && (
