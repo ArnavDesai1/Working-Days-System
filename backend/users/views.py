@@ -134,6 +134,20 @@ class EmailTokenObtainPairSerializer(serializers.Serializer):
     def validate(self, attrs):
         email = attrs.get("email", "").lower().strip()
         password = attrs.get("password")
+        User = get_user_model()
+
+        try:
+            user = User.objects.get(email__iexact=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({
+                "email": "No approved account exists for this email address."
+            })
+
+        if not user.is_active:
+            raise serializers.ValidationError({
+                "email": "This account is inactive. Ask an administrator to reactivate it."
+            })
+
         user = authenticate(
             request=self.context.get("request"),
             username=email,
@@ -141,7 +155,9 @@ class EmailTokenObtainPairSerializer(serializers.Serializer):
         )
 
         if user is None:
-            raise serializers.ValidationError("No active account found with the given credentials.")
+            raise serializers.ValidationError({
+                "password": "The password you entered is incorrect."
+            })
 
         refresh = RefreshToken.for_user(user)
         data = {

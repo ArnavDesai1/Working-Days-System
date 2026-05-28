@@ -673,7 +673,7 @@ function App() {
       indiaReferenceRows,
     };
   }, [calendarForm, selectedMonthHolidays, currentMonthBreakdown]);
-  const displayedWorkingDays = Number(calendarForm.working_days) || monthCalendarInsight.suggestedWorkingDays;
+  const displayedWorkingDays = monthCalendarInsight.suggestedWorkingDays;
   const countedSavedHolidays = selectedMonthHolidays.map((holiday) => ({
     ...holiday,
     monthDates: getHolidayDatesForMonth(holiday, calendarForm.year, calendarForm.month),
@@ -2535,7 +2535,7 @@ function App() {
               <div className="weekday-grid">
                 {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day) => (
                   <label key={day} className="check-tile">
-                    <input type="checkbox" checked={calendarForm[day]} onChange={(event) => setCalendarForm({ ...calendarForm, [day]: event.target.checked, working_days: currentMonthBreakdown.total })} />
+                    <input type="checkbox" checked={calendarForm[day]} onChange={(event) => setCalendarForm({ ...calendarForm, [day]: event.target.checked, working_days: 0 })} />
                     <span>{day.toUpperCase()}</span>
                   </label>
                 ))}
@@ -2550,7 +2550,7 @@ function App() {
                     <span className="insight-unit">working days</span>
                   </div>
                   <div className="insight-formula">
-                    <span>{monthCalendarInsight.weekdaySlots} weekday slots</span>
+                    <span>{monthCalendarInsight.weekdaySlots} selected day slots</span>
                     <span className="insight-minus">−</span>
                     <span>{monthCalendarInsight.holidayExclusions} holiday exclusions</span>
                     <span className="insight-equals">=</span>
@@ -2559,7 +2559,7 @@ function App() {
                 </div>
                 <div className="insight-breakdown-grid">
                   <article><span>Calendar days</span><strong>{monthCalendarInsight.daysInMonth}</strong></article>
-                  <article><span>Selected weekdays</span><strong>{monthCalendarInsight.weekdaySlots}</strong></article>
+                  <article><span>Selected workdays</span><strong>{monthCalendarInsight.weekdaySlots}</strong></article>
                   <article><span>Saved holiday dates</span><strong>{monthCalendarInsight.savedHolidayRows.length}</strong></article>
                   <article><span>Weekend policy</span><strong>{calendarForm.weekend_policy}</strong></article>
                 </div>
