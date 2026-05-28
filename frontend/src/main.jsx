@@ -2885,60 +2885,60 @@ function App() {
                 onChange={(e) => setUserSearch(e.target.value)}
                 style={{ margin: "0 0 4px 0" }}
               />
+              <div className="approved-accounts-scroll">
               <div className="account-list">
                 {!usersLoaded && users.length === 0 ? (
-                  <p className="muted" style={{ padding: "16px", textAlign: "center", gridColumn: "1 / -1" }}>Loading accounts...</p>
+                  <p className="muted" style={{ padding: "16px", textAlign: "center" }}>Loading accounts...</p>
                 ) : filteredUsers.length === 0 ? (
-                  <p className="muted" style={{ padding: "16px", textAlign: "center", gridColumn: "1 / -1" }}>No accounts found.</p>
+                  <p className="muted" style={{ padding: "16px", textAlign: "center" }}>No accounts found.</p>
                 ) : (
                   filteredUsers.map((account) => (
                     <article className="account-row" key={account.id}>
-                      <div className="account-email"><span>Email</span><strong>{account.email}</strong></div>
-                      <div className="account-meta">
-                        <div><span>Role</span><strong className="role-text">{account.role}</strong></div>
-                        <div><span>Status</span><strong className={account.is_active ? "status-active" : "status-inactive"}>{account.is_active ? "Active" : "Inactive"}</strong></div>
-                        {account.role === "admin" ? (
-                          <div className="permission-badges">
-                            <span className="pill status-active">Full admin access</span>
+                      <div className="account-header-row">
+                        <div className="account-email">
+                          <strong>{account.email}</strong>
+                        </div>
+                        <div className="account-badges-inline">
+                          <strong className={account.is_active ? "status-active" : "status-inactive"}>{account.is_active ? "Active" : "Inactive"}</strong>
+                          {account.role === "admin" ? (
+                            <span className="pill status-active">Admin</span>
+                          ) : (
+                            <span className={account.can_edit_calendar_setup ? "pill status-active" : "pill pending"}>{account.can_edit_calendar_setup ? "Can edit" : "View only"}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="account-body">
+                        <div className="account-info-row">
+                          <div className="account-meta">
+                            <div><span>Role</span><strong className="role-text">{account.role}</strong></div>
                           </div>
-                        ) : (
-                          <div className="permission-badges">
-                            <span className={account.can_edit_calendar_setup ? "pill status-active" : "pill pending"}>{account.can_edit_calendar_setup ? "Can edit calendar" : "Calendar view only"}</span>
-                          </div>
-                        )}
-                        {account.must_reset_password && (
-                          <p className="muted">Must change password on next sign-in. Use Reset to issue a new one-time temporary password.</p>
-                        )}
+                          {account.must_reset_password && (
+                            <p className="account-pending-note">⏳ Must change password on next sign-in</p>
+                          )}
+                        </div>
                         <div className="account-actions">
                           <button type="button" className="small-button" onClick={() => requestUserReset(account)}>Reset</button>
                           {account.role !== "admin" && (
-                            <>
-                              <button
-                                type="button"
-                                className="small-button ghost-button"
-                                onClick={() => updateUserAccount(account, { can_edit_calendar_setup: !account.can_edit_calendar_setup }, `${account.email} calendar access updated.`)}
-                              >
-                                {account.can_edit_calendar_setup ? "Remove calendar edit" : "Grant calendar edit"}
-                              </button>
-                            </>
+                            <button
+                              type="button"
+                              className="small-button ghost-button"
+                              onClick={() => updateUserAccount(account, { can_edit_calendar_setup: !account.can_edit_calendar_setup }, `${account.email} calendar access updated.`)}
+                            >
+                              {account.can_edit_calendar_setup ? "Revoke edit" : "Grant edit"}
+                            </button>
                           )}
                           {account.is_active ? (
                             <button type="button" className="small-button danger-button" disabled={account.email === user.email} onClick={() => deactivateUser(account)}>Deactivate</button>
                           ) : (
                             <button type="button" className="small-button" onClick={() => activateUser(account)}>Activate</button>
                           )}
-                          <button
-                            type="button"
-                            className="small-button danger-button"
-                            onClick={() => requestDeleteAccount(account)}
-                          >
-                            Delete
-                          </button>
+                          <button type="button" className="small-button danger-button" onClick={() => requestDeleteAccount(account)}>Delete</button>
                         </div>
                       </div>
                     </article>
                   ))
                 )}
+              </div>
               </div>
             </section>
             {resetPassword.userId && (
