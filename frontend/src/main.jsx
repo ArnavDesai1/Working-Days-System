@@ -465,12 +465,14 @@ function CloverLogo() {
 }
 
 function EyeIcon({ open }) {
+  const pathData = open
+    ? "M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Zm10 3.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7Z"
+    : "M3 4.5 20 21m-5.2-5.05A9.7 9.7 0 0 1 12 18c-6.5 0-10-6-10-6a18.8 18.8 0 0 1 4.24-4.72M9.9 6.33A10.5 10.5 0 0 1 12 6c6.5 0 10 6 10 6a18.9 18.9 0 0 1-3.63 4.3M10.6 10.72A2.5 2.5 0 0 0 13.28 13.4";
+
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path
-        d={open
-          ? "M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Zm10 3.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7Z"
-          : "M3 4.5 20 21m-5.2-5.05A9.7 9.7 0 0 1 12 18c-6.5 0-10-6-10-6a18.8 18.8 0 0 1 4.24-4.72M9.9 6.33A10.5 10.5 0 0 1 12 6c6.5 0 10 6 10 6a18.9 18.9 0 0 1-3.63 4.3M10.6 10.72A2.5 2.5 0 0 0 13.28 13.4"}
+        d={pathData}
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
@@ -547,6 +549,8 @@ function App() {
   const [changePassword, setChangePassword] = useState({ current_password: "", new_password: "" });
   const [confirmDialog, setConfirmDialog] = useState(null);
   const [confirmBusy, setConfirmBusy] = useState(false);
+  const [createUserBusy, setCreateUserBusy] = useState(false);
+  const [resendingPendingAccountId, setResendingPendingAccountId] = useState(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [toast, setToast] = useState("");
   const resetPanelRef = useRef(null);
@@ -1686,6 +1690,7 @@ function App() {
       password: generatedPassword,
     };
 
+    setCreateUserBusy(true);
     try {
       const response = await api.post("/users/", payload, { headers: headers(token) });
       setUserForm(initialUser);
@@ -1717,6 +1722,8 @@ function App() {
         setUserManagementError(form || friendlyApiError(requestError, "Unable to create user."));
         scrollToFeedback("user-form-feedback");
       }
+    } finally {
+      setCreateUserBusy(false);
     }
   }
 
@@ -1788,6 +1795,7 @@ function App() {
 
   async function resendPendingPasswordEmail(account) {
     clearErrors();
+    setResendingPendingAccountId(account.id);
     const newPassword = generateTemporaryPassword();
     try {
       const response = await api.post(
@@ -1812,6 +1820,8 @@ function App() {
       loadAuditLogs();
     } catch (requestError) {
       setError(friendlyApiError(requestError, "Unable to resend temporary password email."));
+    } finally {
+      setResendingPendingAccountId(null);
     }
   }
 
@@ -2810,7 +2820,7 @@ function App() {
                     ✉️ A temporary password will be automatically generated and emailed to this user's email.
                   </p>
                 </div>
-                <button type="submit">Create approved account</button>
+                <button type="submit" disabled={createUserBusy}>{createUserBusy ? "Creating account..." : "Create approved account"}</button>
                 <p className="muted" style={{ textAlign: "center", margin: "12px 0 0 0", fontSize: "13px" }}>
                   Approved accounts are listed below. <a href="#approved-accounts-panel" onClick={(e) => { e.preventDefault(); scrollToSection("approved-accounts-panel"); }} style={{ color: "#00633f", fontWeight: "bold", textDecoration: "underline" }}>Scroll to view ↓</a>
                 </p>
@@ -2861,9 +2871,10 @@ function App() {
                               type="button"
                               className="small-button pending-resend-btn"
                               title="Regenerate and email temporary password"
+                              disabled={resendingPendingAccountId === pendingAccount.id}
                               onClick={() => resendPendingPasswordEmail(pendingAccount)}
                             >
-                              Resend
+                              {resendingPendingAccountId === pendingAccount.id ? "Sending..." : "Resend"}
                             </button>
                           </div>
                         ))}
