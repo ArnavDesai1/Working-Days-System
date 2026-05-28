@@ -361,12 +361,19 @@ function isDefaultFiveDayWeek(config) {
 }
 
 function getIndiaHolidaysForMonth(year, month) {
-  return (INDIA_HOLIDAYS[month] || []).map((h) => ({
-    ...h,
-    date: `${year}-${pad2(month)}-${pad2(h.day)}`,
-    duration_days: h.duration_days || 1,
-    weekday: new Date(year, month - 1, h.day).toLocaleDateString("en-IN", { weekday: "long" }),
-  })).filter((holiday) => Number(holiday.date.slice(5, 7)) === Number(month));
+  const targetYear = Number(year);
+  const targetMonth = Number(month);
+  return (INDIA_HOLIDAYS[targetMonth] || [])
+    .map((holiday) => {
+      const date = `${targetYear}-${pad2(targetMonth)}-${pad2(holiday.day)}`;
+      return {
+        ...holiday,
+        date,
+        duration_days: holiday.duration_days || 1,
+        weekday: new Date(`${date}T00:00:00`).toLocaleDateString("en-IN", { weekday: "long" }),
+      };
+    })
+    .filter((holiday) => getHolidayDatesForMonth(holiday, targetYear, targetMonth).length > 0);
 }
 
 function buildHolidayDayRows(holidays, year, month, source = "saved") {
@@ -658,17 +665,20 @@ function App() {
     const savedHolidayRows = buildHolidayDayRows(selectedMonthHolidays, year, month, "saved");
     const savedDateSet = new Set(savedHolidayRows.map((row) => row.date));
     const savedHolidayDateCount = savedDateSet.size;
+    const holidayOverlapCount = Array.from(savedDateSet).filter((dateValue) => {
+      const date = new Date(`${dateValue}T00:00:00`);
+      return Boolean(calendarForm[getWeekdayKey(date)]);
+    }).length;
     const indiaReferenceRows = buildHolidayDayRows(
       getIndiaHolidaysForMonth(year, month).filter((holiday) => !savedDateSet.has(holiday.date)),
       year,
       month,
       "india-reference"
     );
-    const holidayExclusions = Math.max(0, weekdayOnlyBreakdown.total - currentMonthBreakdown.total);
     return {
       daysInMonth,
       weekdaySlots: weekdayOnlyBreakdown.total,
-      holidayExclusions,
+      holidayOverlapCount,
       suggestedWorkingDays: currentMonthBreakdown.total,
       savedHolidayDateCount,
       savedHolidayRows,
@@ -2554,7 +2564,7 @@ function App() {
                   <div className="insight-formula">
                     <span>{monthCalendarInsight.weekdaySlots} selected day slots</span>
                     <span className="insight-minus">−</span>
-                    <span>{monthCalendarInsight.holidayExclusions} workday holiday exclusions</span>
+                    <span>{monthCalendarInsight.holidayOverlapCount} saved holidays on selected days</span>
                     <span className="insight-equals">=</span>
                     <span>{displayedWorkingDays} billable days</span>
                   </div>
@@ -2598,7 +2608,7 @@ function App() {
                       <div className="holiday-ref-meta">
                         <span className={`holiday-type-badge type-${holiday.type.toLowerCase().replace(/[^a-z]/g, "-")}`}>{holiday.type}</span>
                         <strong className="holiday-ref-name">{holiday.name}</strong>
-                        <span className="holiday-ref-date">{holiday.weekday}, {holiday.day} {monthNames[calendarForm.month - 1]}</span>
+                        <span className="holiday-ref-date">{holiday.weekday}, {formatDate(holiday.date)}</span>
                         <span className="holiday-ref-duration">Approx. {formatHolidayDuration(holiday.duration_days)}</span>
                       </div>
                       <button
