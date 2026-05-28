@@ -612,6 +612,9 @@ function App() {
       return email.includes(q) || first.includes(q) || last.includes(q);
     });
   }, [users, userSearch]);
+  const pendingUsers = useMemo(() => {
+    return users.filter((u) => u.must_reset_password && u.is_active);
+  }, [users]);
   const canEditCalendarSetup = isAdmin || Boolean(user?.can_edit_calendar_setup);
   const selectedClient = clients.find((client) => String(client.id) === String(calendarForm.client));
   const savedHolidaysClient = clients.find((client) => String(client.id) === String(savedHolidaysClientFilter || calendarForm.client));
@@ -848,21 +851,15 @@ function App() {
   }, [oneTimePasswordReveal]);
 
   useEffect(() => {
-    if (!oneTimePasswordReveal || !token) return undefined;
+    if (!token || !isAdmin || activeView !== "users") return undefined;
+    const pendingUsers = users.filter((u) => u.must_reset_password && u.is_active);
+    if (pendingUsers.length === 0) return undefined;
+
     const intervalId = setInterval(() => {
       loadUsers();
     }, 5000);
     return () => clearInterval(intervalId);
-  }, [oneTimePasswordReveal, token]);
-
-  useEffect(() => {
-    if (!oneTimePasswordReveal || !users.length) return;
-    const matchingUser = users.find((u) => u.email === oneTimePasswordReveal.email);
-    if (matchingUser && !matchingUser.must_reset_password) {
-      setOneTimePasswordReveal(null);
-      notifySuccess(`User ${oneTimePasswordReveal.email} has completed password setup.`);
-    }
-  }, [users, oneTimePasswordReveal]);
+  }, [users, token, isAdmin, activeView]);
 
   useEffect(() => {
     if (!calendarForm.client && clients[0]) {
@@ -1672,49 +1669,49 @@ function App() {
     if (!String(userForm.email || "").trim()) {
       localErrors.email = "Email is required.";
     }
-    if (!String(userForm.password || "").trim()) {
-      localErrors.password = "Temporary password is required.";
-    }
 
-    if (localErrors.email || localErrors.password) {
+    if (localErrors.email) {
       setUserFormErrors({
         email: localErrors.email || "",
-        password: localErrors.password || "",
+        password: "",
       });
-      if (localErrors.email) {
-        scrollToFeedback("user-email-field");
-      } else {
-        scrollToFeedback("user-password-field");
-      }
+      scrollToFeedback("user-email-field");
       return;
     }
 
+    // Auto-generate temporary password on the client side just before sending to backend
+    const generatedPassword = generateTemporaryPassword();
+    const payload = {
+      ...userForm,
+      password: generatedPassword,
+    };
+
     try {
-      const response = await api.post("/users/", userForm, { headers: headers(token) });
+      const response = await api.post("/users/", payload, { headers: headers(token) });
       setUserForm(initialUser);
-      if (response.data?.one_time_temporary_password) {
-        setOneTimePasswordReveal({
-          email: response.data.email,
-          password: response.data.one_time_temporary_password,
-        });
-        notifySuccess("Account created. Copy the one-time temporary password below — it is not stored and cannot be retrieved later.");
+      if (response.data?.email_sent) {
+        notifySuccess(`Account created. Temporary password has been emailed to ${response.data.email}.`);
       } else {
-        notifySuccess("Account created successfully. The user must change their password on first sign-in.");
+        // Fallback: If email failed to send, return the password to be copied manually
+        if (response.data?.one_time_temporary_password) {
+          setOneTimePasswordReveal({
+            email: response.data.email,
+            password: response.data.one_time_temporary_password,
+          });
+          notifySuccess("Account created, but email could not be sent. Copy the temporary password below manually.");
+        } else {
+          notifySuccess("Account created successfully. The user must change their password on first sign-in.");
+        }
       }
       loadUsers();
       loadAuditLogs();
     } catch (requestError) {
       const { fields, form } = parseApiFieldErrors(requestError);
       const emailError = fields.email || getFieldMessage(requestError, "email");
-      const passwordError = fields.password || getFieldMessage(requestError, "password");
-      if (emailError || passwordError) {
-        setUserFormErrors({ email: emailError, password: passwordError });
+      if (emailError) {
+        setUserFormErrors({ email: emailError, password: "" });
         setUserManagementError(form || "");
-        if (emailError) {
-          scrollToFeedback("user-email-field");
-        } else {
-          scrollToFeedback("user-password-field");
-        }
+        scrollToFeedback("user-email-field");
       } else {
         setUserFormErrors({ email: "", password: "" });
         setUserManagementError(form || friendlyApiError(requestError, "Unable to create user."));
@@ -1767,20 +1764,54 @@ function App() {
         { new_password: resetPassword.newPassword, must_reset_password: true, clear_edit_permissions: true },
         { headers: headers(token) }
       );
-      if (response.data?.one_time_temporary_password) {
-        setOneTimePasswordReveal({
-          email: response.data.email,
-          password: response.data.one_time_temporary_password,
-        });
-        notifySuccess("Password reset applied. Copy the one-time temporary password below — it is not stored and cannot be retrieved later.");
+      if (response.data?.email_sent) {
+        notifySuccess(`Password reset applied. Temporary password has been emailed to ${response.data.email}.`);
       } else {
-        notifySuccess("Password reset successfully.");
+        // Fallback: If email failed to send, return the password to be copied manually
+        if (response.data?.one_time_temporary_password) {
+          setOneTimePasswordReveal({
+            email: response.data.email,
+            password: response.data.one_time_temporary_password,
+          });
+          notifySuccess("Password reset applied, but email could not be sent. Copy the temporary password below manually.");
+        } else {
+          notifySuccess("Password reset successfully.");
+        }
       }
       setResetPassword({ userId: "", email: "", newPassword: "", currentPasswordPreview: "" });
       loadUsers();
       loadAuditLogs();
     } catch (requestError) {
       setResetPasswordError(getFieldMessage(requestError, "new_password") || friendlyApiError(requestError, "Unable to reset password."));
+    }
+  }
+
+  async function resendPendingPasswordEmail(account) {
+    clearErrors();
+    const newPassword = generateTemporaryPassword();
+    try {
+      const response = await api.post(
+        `/users/${account.id}/reset-password/`,
+        { new_password: newPassword, must_reset_password: true, clear_edit_permissions: false },
+        { headers: headers(token) }
+      );
+      if (response.data?.email_sent) {
+        notifySuccess(`A new temporary password has been generated and emailed to ${account.email}.`);
+      } else {
+        if (response.data?.one_time_temporary_password) {
+          setOneTimePasswordReveal({
+            email: response.data.email,
+            password: response.data.one_time_temporary_password,
+          });
+          notifySuccess("Temporary password regenerated, but email could not be sent. Copy it below manually.");
+        } else {
+          notifySuccess("Temporary password regenerated successfully.");
+        }
+      }
+      loadUsers();
+      loadAuditLogs();
+    } catch (requestError) {
+      setError(friendlyApiError(requestError, "Unable to resend temporary password email."));
     }
   }
 
@@ -2774,14 +2805,10 @@ function App() {
                     <label className="toggle-row"><input type="checkbox" checked={userForm.can_edit_calendar_setup} onChange={(event) => setUserForm({ ...userForm, can_edit_calendar_setup: event.target.checked })} />Allow calendar setup editing</label>
                   </div>
                 )}
-                <label id="user-password-field" className={`form-field${userFormErrors.password ? " has-error" : ""}`}>
-                  Temporary password
-                  <PasswordField value={userForm.password} onChange={(event) => { setUserForm({ ...userForm, password: event.target.value }); setUserFormErrors((current) => ({ ...current, password: "" })); setUserManagementError(""); }} autoComplete="new-password" />
-                </label>
-                <FieldError message={userFormErrors.password} />
-                <div className="inline-actions">
-                  <button type="button" className="ghost-button" onClick={fillGeneratedUserPassword}>Generate password</button>
-                  <button type="button" className="ghost-button" disabled={!userForm.password} onClick={() => copyPassword(userForm.password, "Temporary password copied for sharing.")}>Copy password</button>
+                <div style={{ background: "#f0fbf6", border: "1px solid #b9ead4", borderRadius: "8px", padding: "12px", margin: "8px 0" }}>
+                  <p style={{ color: "#004f35", fontSize: "13px", fontWeight: "700", textAlign: "center", margin: 0 }}>
+                    ✉️ A temporary password will be automatically generated and emailed to this user's email.
+                  </p>
                 </div>
                 <button type="submit">Create approved account</button>
                 <p className="muted" style={{ textAlign: "center", margin: "12px 0 0 0", fontSize: "13px" }}>
@@ -2807,9 +2834,41 @@ function App() {
                     </button>
                   </div>
                   <hr className="divider" />
-                  <div className="guide-note">
+                  <div className="guide-note" style={{ marginBottom: "14px" }}>
                     <strong>💡 Pro Tip:</strong>
                     <p className="muted">Admins have full access automatically. Regular users can have their calendar edit permissions granted or revoked at any time from the account cards below.</p>
+                  </div>
+                  
+                  {/* Scrollable Pending Password Change Section */}
+                  <div className="pending-passwords-container">
+                    <div className="pending-passwords-header">
+                      <strong>⏳ Pending Password Change</strong>
+                      <span className="pending-count-badge">{pendingUsers.length}</span>
+                    </div>
+                    {pendingUsers.length === 0 ? (
+                      <p className="muted" style={{ padding: "12px 0", textAlign: "center", fontStyle: "italic", fontSize: "13px" }}>
+                        All active accounts have logged in and set their password.
+                      </p>
+                    ) : (
+                      <div className="pending-passwords-scroll">
+                        {pendingUsers.map((pendingAccount) => (
+                          <div key={pendingAccount.id} className="pending-user-card">
+                            <div className="pending-user-info">
+                              <span className="pending-user-email" title={pendingAccount.email}>{pendingAccount.email}</span>
+                              <span className="pending-user-role-badge">{pendingAccount.role}</span>
+                            </div>
+                            <button
+                              type="button"
+                              className="small-button pending-resend-btn"
+                              title="Regenerate and email temporary password"
+                              onClick={() => resendPendingPasswordEmail(pendingAccount)}
+                            >
+                              Resend
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </article>
@@ -2903,8 +2962,12 @@ function App() {
                 </div>
                 <label>Temporary password<PasswordField name="new-password" id="admin-reset-password" value={resetPassword.newPassword} onChange={(event) => { setResetPassword({ ...resetPassword, newPassword: event.target.value }); setResetPasswordError(""); }} readOnly autoComplete="new-password" /></label>
                 <div className="inline-actions">
-                  <button type="button" className="ghost-button" onClick={fillGeneratedResetPassword}>Generate password</button>
-                  <button type="button" className="ghost-button" disabled={!resetPassword.newPassword} onClick={() => copyPassword(resetPassword.newPassword, "Temporary password copied for sharing.")}>Copy password</button>
+                  <button type="button" className="ghost-button" onClick={fillGeneratedResetPassword}>Generate new password</button>
+                </div>
+                <div style={{ background: "#f0fbf6", border: "1px solid #b9ead4", borderRadius: "8px", padding: "10px", margin: "4px 0" }}>
+                  <p style={{ color: "#004f35", fontSize: "12px", fontWeight: "700", textAlign: "center", margin: 0 }}>
+                    ✉️ This temporary password will be emailed directly to the user when you click "Apply reset".
+                  </p>
                 </div>
                 {resetPasswordError && <p className="field-error">{resetPasswordError}</p>}
                 <button type="submit">Apply reset</button>

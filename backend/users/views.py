@@ -29,6 +29,36 @@ from .serializers import (
 )
 
 
+def send_temp_password_email(user, temp_password, is_new_account=True):
+    frontend_url = os.environ.get("FRONTEND_URL", "http://127.0.0.1:5173")
+    subject = "Your Clover Working Days System Account — Temporary Password"
+    
+    if is_new_account:
+        message = (
+            f"Hello {user.first_name or 'User'},\n\n"
+            f"An approved account has been created for you in the Clover Working Days System.\n\n"
+            f"Your temporary password is: {temp_password}\n\n"
+            f"Please sign in and update your password immediately at:\n{frontend_url}\n\n"
+            f"Best regards,\nClover Working Days System Administration"
+        )
+    else:
+        message = (
+            f"Hello {user.first_name or 'User'},\n\n"
+            f"Your password for the Clover Working Days System has been reset by an administrator.\n\n"
+            f"Your new temporary password is: {temp_password}\n\n"
+            f"Please sign in and update your password immediately at:\n{frontend_url}\n\n"
+            f"Best regards,\nClover Working Days System Administration"
+        )
+        
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=settings.DEFAULT_FROM_EMAIL or os.environ.get("MAIL_USERNAME"),
+        recipient_list=[user.email],
+        fail_silently=False,
+    )
+
+
 def password_expiry_datetime(user):
     max_age = getattr(settings, "PASSWORD_MAX_AGE_DAYS", 90)
     return user.password_changed_at + timezone.timedelta(days=max_age)
@@ -206,8 +236,23 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         one_time_password = serializer.validated_data["password"]
         user = self.perform_create(serializer)
+        
+        email_sent = False
+        email_error = None
+        try:
+            send_temp_password_email(user, one_time_password, is_new_account=True)
+            email_sent = True
+        except Exception as e:
+            print(f"Failed to email temp password to {user.email}: {e}")
+            email_error = str(e)
+            
         payload = UserSerializer(user, context={"request": request}).data
-        payload["one_time_temporary_password"] = one_time_password
+        payload["email_sent"] = email_sent
+        if email_error:
+            payload["email_error"] = email_error
+        if not email_sent:
+            payload["one_time_temporary_password"] = one_time_password
+            
         headers = self.get_success_headers(payload)
         return Response(payload, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -264,9 +309,24 @@ class UserViewSet(viewsets.ModelViewSet):
                 "permissions_cleared": permissions_cleared,
             },
         )
-        payload = UserSerializer(user, context={"request": request}).data
+        
+        email_sent = False
+        email_error = None
         if user.must_reset_password:
+            try:
+                send_temp_password_email(user, new_password, is_new_account=False)
+                email_sent = True
+            except Exception as e:
+                print(f"Failed to email reset temp password to {user.email}: {e}")
+                email_error = str(e)
+                
+        payload = UserSerializer(user, context={"request": request}).data
+        payload["email_sent"] = email_sent
+        if email_error:
+            payload["email_error"] = email_error
+        if user.must_reset_password and not email_sent:
             payload["one_time_temporary_password"] = new_password
+            
         return Response(payload)
 
     @action(detail=True, methods=["post"], url_path="activate")
@@ -353,9 +413,9 @@ class RequestPasswordResetView(APIView):
 
         try:
             send_mail(
-                subject="Reset your Clover Timesheet Validation password",
+                subject="Reset your Clover Working Days System password",
                 message=(
-                    "A password reset was requested for your Clover Timesheet Validation account.\n\n"
+                    "A password reset was requested for your Clover Working Days System account.\n\n"
                     f"Use this link to set a new password:\n{reset_link}\n\n"
                     "If you did not request this, ignore this email."
                 ),

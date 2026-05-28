@@ -3273,3 +3273,123 @@ td select {
   }
 }
 
+/* Pending Password Change Section Styles */
+.pending-passwords-container {
+  background: #ffffff;
+  border: 1px solid #d8e0dd;
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px;
+}
+
+.pending-passwords-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pending-passwords-header strong {
+  color: #1e2523;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pending-count-badge {
+  background: #ffe39a;
+  border-radius: 999px;
+  color: #8c6d17;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 3px 8px;
+}
+
+.pending-passwords-scroll {
+  max-height: 190px;
+  overflow-y: auto;
+  display: grid;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+/* Custom premium scrollbar styling */
+.pending-passwords-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.pending-passwords-scroll::-webkit-scrollbar-track {
+  background: #f1f5f3;
+  border-radius: 3px;
+}
+.pending-passwords-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5d1;
+  border-radius: 3px;
+}
+.pending-passwords-scroll::-webkit-scrollbar-thumb:hover {
+  background: #b0beb8;
+}
+
+.pending-user-card {
+  align-items: center;
+  background: #f7faf9;
+  border: 1px solid #e3ece8;
+  border-radius: 6px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 10px 12px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pending-user-card:hover {
+  border-color: #cbd5d1;
+  background: #f1f5f3;
+}
+
+.pending-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.pending-user-email {
+  color: #1e2523;
+  font-size: 13px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pending-user-role-badge {
+  background: #e8f4ef;
+  border-radius: 4px;
+  color: #00633f;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 1px 5px;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.pending-resend-btn {
+  background: #e8f4ef;
+  color: #00633f;
+  min-height: 28px;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 0 10px;
+  flex-shrink: 0;
+}
+
+.pending-resend-btn:hover {
+  background: #007a4d;
+  color: #ffffff;
+  box-shadow: none;
+  transform: none;
+}
+
