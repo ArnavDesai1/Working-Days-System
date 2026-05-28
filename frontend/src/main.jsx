@@ -2893,12 +2893,12 @@ function App() {
                   <p className="muted" style={{ padding: "16px", textAlign: "center" }}>No accounts found.</p>
                 ) : (
                   filteredUsers.map((account) => (
-                    <article className="account-row" key={account.id}>
-                      <div className="account-header-row">
-                        <div className="account-email">
+                    <article className="account-card" key={account.id}>
+                      <div className="account-card-header">
+                        <div className="account-card-email">
                           <strong>{account.email}</strong>
                         </div>
-                        <div className="account-badges-inline">
+                        <div className="account-card-badges">
                           <strong className={account.is_active ? "status-active" : "status-inactive"}>{account.is_active ? "Active" : "Inactive"}</strong>
                           {account.role === "admin" ? (
                             <span className="pill status-active">Admin</span>
@@ -2907,33 +2907,34 @@ function App() {
                           )}
                         </div>
                       </div>
-                      <div className="account-body">
-                        <div className="account-info-row">
-                          <div className="account-meta">
-                            <div><span>Role</span><strong className="role-text">{account.role}</strong></div>
+                      <div className="account-card-body">
+                        <div className="account-card-meta">
+                          <div className="meta-item">
+                            <span className="meta-label">Role</span>
+                            <strong className="meta-value role-text">{account.role}</strong>
                           </div>
-                          {account.must_reset_password && (
-                            <p className="account-pending-note">⏳ Must change password on next sign-in</p>
-                          )}
                         </div>
-                        <div className="account-actions">
-                          <button type="button" className="small-button" onClick={() => requestUserReset(account)}>Reset</button>
-                          {account.role !== "admin" && (
-                            <button
-                              type="button"
-                              className="small-button ghost-button"
-                              onClick={() => updateUserAccount(account, { can_edit_calendar_setup: !account.can_edit_calendar_setup }, `${account.email} calendar access updated.`)}
-                            >
-                              {account.can_edit_calendar_setup ? "Revoke edit" : "Grant edit"}
-                            </button>
-                          )}
-                          {account.is_active ? (
-                            <button type="button" className="small-button danger-button" disabled={account.email === user.email} onClick={() => deactivateUser(account)}>Deactivate</button>
-                          ) : (
-                            <button type="button" className="small-button" onClick={() => activateUser(account)}>Activate</button>
-                          )}
-                          <button type="button" className="small-button danger-button" onClick={() => requestDeleteAccount(account)}>Delete</button>
-                        </div>
+                        {account.must_reset_password && (
+                          <p className="account-card-pending-note">⏳ Must change password on next sign-in</p>
+                        )}
+                      </div>
+                      <div className="account-card-actions">
+                        <button type="button" className="small-button" onClick={() => requestUserReset(account)}>Reset</button>
+                        {account.role !== "admin" && (
+                          <button
+                            type="button"
+                            className="small-button ghost-button"
+                            onClick={() => updateUserAccount(account, { can_edit_calendar_setup: !account.can_edit_calendar_setup }, `${account.email} calendar access updated.`)}
+                          >
+                            {account.can_edit_calendar_setup ? "Revoke edit" : "Grant edit"}
+                          </button>
+                        )}
+                        {account.is_active ? (
+                          <button type="button" className="small-button danger-button" disabled={account.email === user.email} onClick={() => deactivateUser(account)}>Deactivate</button>
+                        ) : (
+                          <button type="button" className="small-button" onClick={() => activateUser(account)}>Activate</button>
+                        )}
+                        <button type="button" className="small-button danger-button" onClick={() => requestDeleteAccount(account)}>Delete</button>
                       </div>
                     </article>
                   ))
