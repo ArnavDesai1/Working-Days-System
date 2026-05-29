@@ -2402,6 +2402,39 @@ nav {
   line-height: 1.4;
 }
 
+.account-card-permission-status {
+  margin: 0;
+}
+
+.permission-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.permission-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+.permission-full {
+  color: #00633f;
+  background: #edf8f2;
+  border: 1px solid #b9ead4;
+}
+
+.permission-limited {
+  color: #6b5a2a;
+  background: #fdf8ee;
+  border: 1px solid #e8dbb8;
+}
+
 .account-card-actions {
   display: flex;
   flex-wrap: wrap;

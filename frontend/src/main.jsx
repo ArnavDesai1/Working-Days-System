@@ -2940,6 +2940,19 @@ function App() {
                         {account.must_reset_password && (
                           <p className="account-card-pending-note">⏳ Must change password on next sign-in</p>
                         )}
+                        <div className="account-card-permission-status">
+                          {account.role === "admin" ? (
+                            <p className="permission-note permission-full">
+                              <span className="permission-icon">🔓</span>
+                              <span>Full access to all features</span>
+                            </p>
+                          ) : (
+                            <p className="permission-note permission-limited">
+                              <span className="permission-icon">🔒</span>
+                              <span>Limited access as granted by admin{account.can_edit_calendar_setup ? " · Calendar editing enabled" : ""}</span>
+                            </p>
+                          )}
+                        </div>
                       </div>
                       <div className="account-card-actions">
                         <button type="button" className="small-button" onClick={() => requestUserReset(account)}>Reset</button>
