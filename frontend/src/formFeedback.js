@@ -105,8 +105,11 @@ export function validateHolidayForm(form) {
   if (!String(form.client || "").trim()) {
     errors.client = "Select a client before adding a holiday.";
   }
-  if (!String(form.name || "").trim()) {
+  const name = String(form.name || "").trim();
+  if (!name) {
     errors.name = "Holiday name is required.";
+  } else if (name.length > 50) {
+    errors.name = "Holiday name cannot exceed 50 characters.";
   }
   if (!String(form.date || "").trim()) {
     errors.date = "Date is required.";
@@ -116,14 +119,19 @@ export function validateHolidayForm(form) {
   const duration = Number(form.duration_days);
   if (!duration || duration < 1) {
     errors.duration_days = "Duration must be at least 1 day.";
+  } else if (duration > 365) {
+    errors.duration_days = "Duration cannot exceed 365 days.";
   }
   return errors;
 }
 
 export function validateClientForm(form) {
   const errors = {};
-  if (!String(form.name || "").trim()) {
+  const name = String(form.name || "").trim();
+  if (!name) {
     errors.name = "Client name is required.";
+  } else if (name.length > 50) {
+    errors.name = "Client name cannot exceed 50 characters.";
   }
   return errors;
 }
@@ -139,14 +147,29 @@ export function validateEntryForm(form) {
 
 export function validateLoginForm(email, password) {
   const errors = {};
-  if (!String(email || "").trim()) errors.email = "Email is required.";
-  if (!String(password || "").trim()) errors.password = "Password is required.";
+  const emailStr = String(email || "").trim();
+  const passwordStr = String(password || "").trim();
+  if (!emailStr) {
+    errors.email = "Email is required.";
+  } else if (emailStr.length > 60) {
+    errors.email = "Email cannot exceed 60 characters.";
+  }
+  if (!passwordStr) {
+    errors.password = "Password is required.";
+  } else if (passwordStr.length > 64) {
+    errors.password = "Password cannot exceed 64 characters.";
+  }
   return errors;
 }
 
 export function validateResetEmailForm(email) {
   const errors = {};
-  if (!String(email || "").trim()) errors.email = "Email is required.";
+  const emailStr = String(email || "").trim();
+  if (!emailStr) {
+    errors.email = "Email is required.";
+  } else if (emailStr.length > 60) {
+    errors.email = "Email cannot exceed 60 characters.";
+  }
   return errors;
 }
 

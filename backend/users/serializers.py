@@ -68,7 +68,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class AdminCreateUserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, max_length=64)
 
     class Meta:
         model = get_user_model()
@@ -109,8 +109,8 @@ class AdminCreateUserSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    current_password = serializers.CharField(write_only=True)
-    new_password = serializers.CharField(write_only=True)
+    current_password = serializers.CharField(write_only=True, max_length=64)
+    new_password = serializers.CharField(write_only=True, max_length=64)
 
     def validate_new_password(self, value):
         validate_password(value, self.context["request"].user)
@@ -118,7 +118,7 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 class AdminResetPasswordSerializer(serializers.Serializer):
-    new_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True, max_length=64)
     must_reset_password = serializers.BooleanField(default=True)
     clear_edit_permissions = serializers.BooleanField(default=True)
 

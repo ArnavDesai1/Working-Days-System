@@ -490,7 +490,7 @@ function EyeIcon({ open }) {
   );
 }
 
-function PasswordField({ value, onChange, readOnly = false, disabled = false, autoComplete = "current-password", name = "", id = "" }) {
+function PasswordField({ value, onChange, readOnly = false, disabled = false, autoComplete = "current-password", name = "", id = "", maxLength = 64 }) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -504,6 +504,7 @@ function PasswordField({ value, onChange, readOnly = false, disabled = false, au
         readOnly={readOnly}
         disabled={disabled}
         autoComplete={autoComplete}
+        maxLength={maxLength}
       />
       <button
         type="button"
@@ -1033,6 +1034,26 @@ function App() {
       resetCalendarExcelUpload();
       return;
     }
+    
+    // File size validation (5 MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setCalendarExcelFile(null);
+      setCalendarExcelPreview(null);
+      setCalendarExcelExtraction(null);
+      setCalendarExcelError("File too large. Maximum size is 5 MB.");
+      return;
+    }
+    
+    // File extension validation
+    const ext = file.name ? file.name.substring(file.name.lastIndexOf('.')).toLowerCase() : '';
+    if (!['.xlsx', '.xlsm', '.xltx', '.xltm'].includes(ext)) {
+      setCalendarExcelFile(null);
+      setCalendarExcelPreview(null);
+      setCalendarExcelExtraction(null);
+      setCalendarExcelError("Invalid file type. Only Excel files (.xlsx, .xlsm, .xltx, .xltm) are allowed.");
+      return;
+    }
+
     setCalendarExcelFile(file);
     setCalendarExcelPreview(null);
     setCalendarExcelExtraction(null);
@@ -1995,14 +2016,14 @@ function App() {
             ) : showResetRequest ? (
               <label className={`form-field${loginFormErrors.email ? " has-error" : ""}`}>
                 Approved email
-                <input type="email" name="email" autoComplete="email" value={resetEmail} onChange={(event) => { setResetEmail(event.target.value); setLoginFormErrors({}); setLoginFormBanner(""); }} />
+                <input type="email" name="email" autoComplete="email" value={resetEmail} onChange={(event) => { setResetEmail(event.target.value); setLoginFormErrors({}); setLoginFormBanner(""); }} maxLength={60} />
                 <FieldError message={loginFormErrors.email} />
               </label>
             ) : (
               <div className="login-fields">
                 <label className={`form-field${loginFormErrors.email ? " has-error" : ""}`}>
                   Email
-                  <input type="email" name="email" autoComplete="email" value={email} onChange={(event) => { setEmail(event.target.value); setLoginFormErrors({}); setLoginFormBanner(""); }} />
+                  <input type="email" name="email" autoComplete="email" value={email} onChange={(event) => { setEmail(event.target.value); setLoginFormErrors({}); setLoginFormBanner(""); }} maxLength={60} />
                   <FieldError message={loginFormErrors.email} />
                 </label>
                 <label className={`form-field${loginFormErrors.password ? " has-error" : ""}`}>
@@ -2178,7 +2199,7 @@ function App() {
               <FormBanner message={clientFormBanner} />
               <label className={`form-field${clientFormErrors.name ? " has-error" : ""}`}>
                 Client name
-                <input value={clientForm.name} onChange={(event) => { setClientForm({ ...clientForm, name: event.target.value }); setClientFormErrors({}); setClientFormBanner(""); }} />
+                <input value={clientForm.name} onChange={(event) => { setClientForm({ ...clientForm, name: event.target.value }); setClientFormErrors({}); setClientFormBanner(""); }} maxLength={50} />
                 <FieldError message={clientFormErrors.name} />
               </label>
               <label>Status<select value={clientForm.status} onChange={(event) => setClientForm({ ...clientForm, status: event.target.value })}><option value="active">Active</option><option value="inactive">Inactive</option></select></label>
@@ -2235,6 +2256,7 @@ function App() {
                     placeholder="Name, date, or type…"
                     value={savedHolidaySearch}
                     onChange={(event) => setSavedHolidaySearch(event.target.value)}
+                    maxLength={50}
                   />
                 </label>
                 <label className="saved-holiday-month-filter">
@@ -2265,7 +2287,7 @@ function App() {
                               <div className="saved-holiday-inline-form">
                                 <label className={`form-field${editingHolidayErrors.name ? " has-error" : ""}`}>
                                   Name
-                                  <input value={editingHoliday.name} onChange={(event) => { setEditingHoliday({ ...editingHoliday, name: event.target.value }); clearEditingHolidayField("name"); }} />
+                                  <input value={editingHoliday.name} onChange={(event) => { setEditingHoliday({ ...editingHoliday, name: event.target.value }); clearEditingHolidayField("name"); }} maxLength={50} />
                                   <FieldError message={editingHolidayErrors.name} />
                                 </label>
                                 <label className={`form-field${editingHolidayErrors.date ? " has-error" : ""}`}>
@@ -2275,7 +2297,7 @@ function App() {
                                 </label>
                                 <label className={`form-field${editingHolidayErrors.duration_days ? " has-error" : ""}`}>
                                   Duration
-                                  <input type="number" min="1" value={editingHoliday.duration_days} onChange={(event) => { setEditingHoliday({ ...editingHoliday, duration_days: Math.max(1, Number(event.target.value) || 1) }); clearEditingHolidayField("duration_days"); }} />
+                                  <input type="number" min="1" max="365" value={editingHoliday.duration_days} onChange={(event) => { setEditingHoliday({ ...editingHoliday, duration_days: Math.max(1, Number(event.target.value) || 1) }); clearEditingHolidayField("duration_days"); }} />
                                   <FieldError message={editingHolidayErrors.duration_days} />
                                 </label>
                                 <label className={`form-field${editingHolidayErrors.type ? " has-error" : ""}`}>
@@ -2535,7 +2557,7 @@ function App() {
               </div>
               <div className="form-grid">
                 <label>Client<ClientSelect clients={clients} value={calendarForm.client} onChange={(value) => { setCalendarForm({ ...calendarForm, client: value }); setHolidayForm({ ...holidayForm, client: value }); setCalendarFormBanner(""); }} /></label>
-                <label>Year<input type="number" value={calendarForm.year} onChange={(event) => setCalendarForm({ ...calendarForm, year: Number(event.target.value) })} /></label>
+                <label>Year<input type="number" min="1900" max="2100" value={calendarForm.year} onChange={(event) => setCalendarForm({ ...calendarForm, year: Number(event.target.value) })} /></label>
                 <label>Month<MonthSelect value={calendarForm.month} onChange={(value) => setCalendarForm({ ...calendarForm, month: value })} /></label>
                 <label>Working days<input type="number" value={displayedWorkingDays} readOnly title="Auto-filled from Excel or calculated from weekdays and saved holidays" /></label>
               </div>
@@ -2639,7 +2661,7 @@ function App() {
                     <FormBanner message={holidayFormBanner} />
                     <label className={`form-field${holidayFormErrors.name ? " has-error" : ""}`}>
                       Holiday name
-                      <input placeholder="e.g. Founders Day" value={holidayForm.name} onChange={(event) => { setHolidayForm({ ...holidayForm, name: event.target.value }); clearHolidayFieldError("name"); }} />
+                      <input placeholder="e.g. Founders Day" value={holidayForm.name} onChange={(event) => { setHolidayForm({ ...holidayForm, name: event.target.value }); clearHolidayFieldError("name"); }} maxLength={50} />
                       <FieldError message={holidayFormErrors.name} />
                     </label>
                     {existingHolidayNameMatch && !holidayFormErrors.name && (
@@ -2652,7 +2674,7 @@ function App() {
                     </label>
                     <label className={`form-field${holidayFormErrors.duration_days ? " has-error" : ""}`}>
                       Duration
-                      <input type="number" min="1" value={holidayForm.duration_days} onChange={(event) => { setHolidayForm({ ...holidayForm, duration_days: Math.max(1, Number(event.target.value) || 1) }); clearHolidayFieldError("duration_days"); }} />
+                      <input type="number" min="1" max="365" value={holidayForm.duration_days} onChange={(event) => { setHolidayForm({ ...holidayForm, duration_days: Math.max(1, Number(event.target.value) || 1) }); clearHolidayFieldError("duration_days"); }} />
                       <FieldError message={holidayFormErrors.duration_days} />
                     </label>
                     <label className={`form-field${holidayFormErrors.type ? " has-error" : ""}`}>
@@ -2681,7 +2703,7 @@ function App() {
               </div>
               <div className="form-grid">
                 <label>Client<ClientSelect clients={clients} value={calendarForm.client} onChange={(value) => setCalendarForm({ ...calendarForm, client: value })} /></label>
-                <label>Year<input type="number" value={calendarForm.year} onChange={(event) => setCalendarForm({ ...calendarForm, year: Number(event.target.value) })} /></label>
+                <label>Year<input type="number" min="1900" max="2100" value={calendarForm.year} onChange={(event) => setCalendarForm({ ...calendarForm, year: Number(event.target.value) })} /></label>
                 <label>Month<MonthSelect value={calendarForm.month} onChange={(value) => setCalendarForm({ ...calendarForm, month: value })} /></label>
                 <label>Working days<input type="number" value={currentMonthBreakdown.total} readOnly /></label>
               </div>
@@ -2714,7 +2736,7 @@ function App() {
                         <td>
                           {editingHoliday?.id === holiday.id ? (
                             <>
-                              <input value={editingHoliday.name} onChange={(event) => { setEditingHoliday({ ...editingHoliday, name: event.target.value }); clearEditingHolidayField("name"); }} />
+                              <input value={editingHoliday.name} onChange={(event) => { setEditingHoliday({ ...editingHoliday, name: event.target.value }); clearEditingHolidayField("name"); }} maxLength={50} />
                               <FieldError message={editingHolidayErrors.name} />
                             </>
                           ) : (
@@ -2734,7 +2756,7 @@ function App() {
                         <td>
                           {editingHoliday?.id === holiday.id ? (
                             <>
-                              <input type="number" min="1" value={editingHoliday.duration_days} onChange={(event) => { setEditingHoliday({ ...editingHoliday, duration_days: Math.max(1, Number(event.target.value) || 1) }); clearEditingHolidayField("duration_days"); }} />
+                              <input type="number" min="1" max="365" value={editingHoliday.duration_days} onChange={(event) => { setEditingHoliday({ ...editingHoliday, duration_days: Math.max(1, Number(event.target.value) || 1) }); clearEditingHolidayField("duration_days"); }} />
                               <FieldError message={editingHolidayErrors.duration_days} />
                             </>
                           ) : (
@@ -2810,11 +2832,11 @@ function App() {
                 {userManagementError && <p className="form-banner-error" role="alert">{userManagementError}</p>}
                 <label id="user-email-field" className={`form-field${userFormErrors.email ? " has-error" : ""}`}>
                   Email
-                  <input type="email" value={userForm.email} onChange={(event) => { setUserForm({ ...userForm, email: event.target.value }); setUserFormErrors((current) => ({ ...current, email: "" })); setUserManagementError(""); }} />
+                  <input type="email" value={userForm.email} onChange={(event) => { setUserForm({ ...userForm, email: event.target.value }); setUserFormErrors((current) => ({ ...current, email: "" })); setUserManagementError(""); }} maxLength={60} />
                 </label>
                 <FieldError message={userFormErrors.email} />
-                <label>First name<input value={userForm.first_name} onChange={(event) => setUserForm({ ...userForm, first_name: event.target.value })} /></label>
-                <label>Last name<input value={userForm.last_name} onChange={(event) => setUserForm({ ...userForm, last_name: event.target.value })} /></label>
+                <label>First name<input value={userForm.first_name} onChange={(event) => setUserForm({ ...userForm, first_name: event.target.value })} maxLength={30} /></label>
+                <label>Last name<input value={userForm.last_name} onChange={(event) => setUserForm({ ...userForm, last_name: event.target.value })} maxLength={30} /></label>
                 <label>Role<select value={userForm.role} onChange={(event) => setUserForm({ ...userForm, role: event.target.value })}><option value="user">User</option><option value="admin">Admin</option></select></label>
                 {userForm.role === "admin" ? (
                   <div className="temporary-password-box compact">
@@ -2906,6 +2928,7 @@ function App() {
                 placeholder="Search by email or name..."
                 value={userSearch}
                 onChange={(e) => setUserSearch(e.target.value)}
+                maxLength={50}
                 style={{ margin: "0 0 4px 0" }}
               />
               <div className="approved-accounts-scroll">

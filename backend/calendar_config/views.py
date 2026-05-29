@@ -521,6 +521,17 @@ class CalendarExcelPreviewView(APIView):
         uploaded_file = request.FILES.get("file")
         if not uploaded_file:
             return Response({"detail": "Upload an Excel file."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Validate file size (max 5 MB)
+        if uploaded_file.size > 5 * 1024 * 1024:
+            return Response({"detail": "File too large. Maximum size is 5 MB."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Validate file extension
+        import os
+        ext = os.path.splitext(uploaded_file.name)[1].lower()
+        if ext not in ['.xlsx', '.xlsm', '.xltx', '.xltm']:
+            return Response({"detail": "Invalid file type. Only Excel files (.xlsx, .xlsm, .xltx, .xltm) are allowed."}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
             workbook = workbook_from_upload(uploaded_file)
         except Exception:
@@ -544,6 +555,17 @@ class CalendarExcelExtractView(APIView):
         uploaded_file = request.FILES.get("file")
         if not uploaded_file:
             return Response({"detail": "Upload an Excel file."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Validate file size (max 5 MB)
+        if uploaded_file.size > 5 * 1024 * 1024:
+            return Response({"detail": "File too large. Maximum size is 5 MB."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Validate file extension
+        import os
+        ext = os.path.splitext(uploaded_file.name)[1].lower()
+        if ext not in ['.xlsx', '.xlsm', '.xltx', '.xltm']:
+            return Response({"detail": "Invalid file type. Only Excel files (.xlsx, .xlsm, .xltx, .xltm) are allowed."}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
             workbook = workbook_from_upload(uploaded_file)
             target_sheet = request.data.get("sheet_name", "")

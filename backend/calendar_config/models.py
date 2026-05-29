@@ -1,12 +1,13 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from clients.models import Client
 from users.models import User
 
 class WorkingDayConfig(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    year = models.IntegerField(default=2026)
-    month = models.IntegerField(default=1)
-    working_days = models.IntegerField(default=0)
+    year = models.IntegerField(default=2026, validators=[MinValueValidator(1900), MaxValueValidator(2100)])
+    month = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    working_days = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(366)])
 
     mon = models.BooleanField(default=True)
     tue = models.BooleanField(default=True)
@@ -30,7 +31,7 @@ class Holiday(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     date = models.DateField()
-    duration_days = models.PositiveIntegerField(default=1)
+    duration_days = models.PositiveIntegerField(default=1, validators=[MaxValueValidator(365)])
 
     type = models.CharField(
         max_length=10,
